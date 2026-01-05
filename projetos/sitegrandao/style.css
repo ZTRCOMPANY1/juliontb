@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    z-index: 2;
+}
+
+h1 {
+    color: #ff4d6d;
+}
+
+p {
+    font-size: 18px;
+}
+
+.texto-grande {
+    line-height: 1.6;
+}
+
+.te-amo {
+    font-size: 22px;
+    line-height: 1.8;
+}
+
+.btn, button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4d6d;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button {
+    background: #999;
+}
+
+.animar {
+    animation: subir 1s ease;
+}
+
+@keyframes subir {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Corações */
+.coracoes-bg {
+    position: relative;
+    overflow: hidden;
+}
+
+.coracoes-bg::before {
+    content: "❤️ 💖 💕 💗 💓 💞❤️ 💖 💕 💗 💓 💞❤️ 💖 💕 💗 💓 💞❤️ 💖 💕 💗 💓 💞";
+    position: absolute;
+    font-size: 30px;
+    animation: flutuar 12s linear infinite;
+    opacity: 0.4;
+}
+
+
+@keyframes flutuar {
+    0% { transform: translateY(100vh); }
+    100% { transform: translateY(-100vh); }
+}
+
+.buttons {
+    position: relative;
+    height: 200px;
+}
+
+.infinito {
+    padding: 40px;
+    text-align: center;
+}
+
+.espaco {
+    height: 2500px;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 90%;
+    animation: subir 0.8s ease;
+}
+
+
+/* Fundo estilo WhatsApp */
+.fundo-zap {
+    background: url("fundo.jpg") center center / cover no-repeat fixed;
+}
+
+/* Card com fundo suave */
+.fundo-transparente {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+
+/* Imagem de prova */
+.img-prova {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 15px;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}

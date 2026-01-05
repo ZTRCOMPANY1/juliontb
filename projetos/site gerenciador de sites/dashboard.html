@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard | ZTR COMPANY</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header-ztr">
+    <div class="brand">
+        <div class="logo">ZTR</div>
+        <div>
+            <h1>ZTR COMPANY</h1>
+            <small>Gerenciador de Sites</small>
+        </div>
+    </div>
+
+    <div class="acoes">
+        <button onclick="exportarBackup()">📤 Exportar</button>
+
+        <label class="importar">
+            📥 Importar
+            <input type="file" accept=".json" hidden onchange="importarBackup(event)">
+        </label>
+
+        <button onclick="logout()">Sair</button>
+    </div>
+</header>
+
+<section class="stats">
+    <div class="stat">📁 Total<br><span id="total">0</span></div>
+    <div class="stat">🎮 Games<br><span id="games">0</span></div>
+    <div class="stat">🌐 Sites<br><span id="sites">0</span></div>
+    <div class="stat">⚙️ APIs<br><span id="apis">0</span></div>
+</section>
+
+<section class="filtros">
+    <input id="busca" placeholder="🔍 Buscar site..." oninput="render()">
+    <select id="filtroCategoria" onchange="render()">
+        <option value="Todos">Todas categorias</option>
+        <option value="Games">Games</option>
+        <option value="Sites">Sites</option>
+        <option value="APIs">APIs</option>
+    </select>
+</section>
+
+<section class="novo">
+    <input id="nome" placeholder="Nome do site">
+    <input id="url" placeholder="URL do site">
+    <input id="repo" placeholder="Link do repositório (GitHub)">
+    <select id="categoria">
+        <option>Games</option>
+        <option>Sites</option>
+        <option>APIs</option>
+    </select>
+    <button onclick="addSite()">➕ Adicionar site</button>
+</section>
+
+<main id="lista"></main>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
