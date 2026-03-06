@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quiz Sobre Nós ❤️</title>
+
+<link rel="stylesheet" href="quiz.css">
+
+</head>
+
+<body>
+
+<button class="voltar" onclick="voltar()">⬅ Voltar</button>
+
+<h1>🎮 Quanto você me conhece?</h1>
+
+<div id="quiz">
+
+<div class="pergunta">
+<p>1️⃣ Qual o Meu Carro Favorito hehehe?</p>
+
+<button onclick="responder(this,true)">BMW</button>
+<button onclick="responder(this,true)">BMW</button>
+<button onclick="responder(this,true)">BMW</button>
+</div>
+
+<div class="pergunta">
+<p>2️⃣ Qual nosso momento favorito?</p>
+
+<button onclick="responder(this,true)">Assistir série</button>
+<button onclick="responder(this,true)">Conversar juntos</button>
+<button onclick="responder(this,true)">Jogar</button>
+</div>
+
+<div class="pergunta">
+<p>3️⃣ Quem disse "eu te amo" primeiro?</p>
+
+<button onclick="responder(this,true)">Eu</button>
+<button onclick="responder(this,true)">Você</button>
+
+</div>
+
+</div>
+
+<button id="resultadoBtn" onclick="resultado()">Ver Resultado</button>
+
+<p id="resultado"></p>
+
+<script src="quiz.js"></script>
+
+<script>
+function voltar(){
+window.history.back();
+}
+</script>
+
+</body>
+</html>

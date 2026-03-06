@@ -447,7 +447,7 @@ padding:60px 20px;
 .musica-card{
 max-width:350px;
 margin:auto;
-background:white;
+background:rgb(247, 76, 76);
 padding:25px;
 border-radius:15px;
 box-shadow:0 10px 20px rgba(0,0,0,0.2);
@@ -472,4 +472,28 @@ color:white;
 border:none;
 border-radius:10px;
 cursor:pointer;
+}
+
+
+.btnQuiz{
+padding:15px 30px;
+font-size:18px;
+background:#ff4f81;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btnQuiz:hover{
+transform:scale(1.05);
+}
+
+.resposta-selecionada{
+background:#2ecc71 !important;
+}
+
+.resposta-errada{
+background:#ff4d4d !important;
 }
