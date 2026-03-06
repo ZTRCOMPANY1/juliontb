@@ -110,5 +110,20 @@ document.getElementById("fotoModal").style.display="none"
 }
 
 
+const musica = document.getElementById("musica");
+const playBtn = document.getElementById("playBtn");
+
+playBtn.onclick = () => {
+
+if(musica.paused){
+musica.play();
+playBtn.innerText="⏸ Pausar Música";
+}else{
+musica.pause();
+playBtn.innerText="▶ Tocar Música";
+}
+
+};
+
 
 animate()
