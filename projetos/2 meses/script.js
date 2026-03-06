@@ -110,21 +110,5 @@ document.getElementById("fotoModal").style.display="none"
 }
 
 
-const reasonsContainer = document.getElementById("reasons")
-
-if(reasonsContainer){
-
-for(let i=1;i<=400;i++){
-
-const div = document.createElement("div")
-
-div.innerText = i + ". Porque você faz meu mundo melhor ❤️"
-
-reasonsContainer.appendChild(div)
-
-}
-
-}
-
 
 animate()

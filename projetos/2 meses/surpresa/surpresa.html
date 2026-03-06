@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Surpresa ❤️</title>
+
+<link rel="stylesheet" href="surpresa.css">
+
+</head>
+
+<body>
+
+<button class="voltar" onclick="voltar()">⬅ Voltar</button>
+
+<h1>Mini Jogo do Amor 💗</h1>
+
+<p>Clique no máximo de corações que conseguir em 10 segundos!</p>
+
+<button id="startBtn">Começar</button>
+
+<div class="info">
+Tempo: <span id="time">10</span>s |
+Corações: <span id="score">0</span>
+</div>
+
+<div id="gameArea"></div>
+
+<div id="finalMessage"></div>
+
+<script src="surpresa.js"></script>
+
+<script>
+function voltar(){
+window.history.back();
+}
+</script>
+
+</body>
+</html>

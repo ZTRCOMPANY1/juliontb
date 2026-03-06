@@ -1,0 +1,32 @@
+
+
+.titulo{
+color:rgb(255, 255, 255);
+margin-bottom:40px;
+font-size:32px;
+}
+
+#motivos-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+max-width:1200px;
+margin:auto;
+}
+
+.motivo-card{
+background:rgb(255, 110, 110);
+border-radius:15px;
+padding:20px;
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+transition:0.3s;
+}
+
+.motivo-card:hover{
+transform:scale(1.05);
+}
+
+.motivo-card h3{
+color:#e90000;
+margin-bottom:10px;
+}
