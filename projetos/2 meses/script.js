@@ -1,4 +1,4 @@
-const startDate = new Date("2026-01-05")
+const startDate = new Date("2026-01-10")
 
 function updateCounter(){
 
