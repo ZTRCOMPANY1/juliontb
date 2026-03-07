@@ -108,7 +108,8 @@ const motivos = [
 "Porque você ilumina minha vida",
 "Porque você me inspira",
 "Porque você é meu amor",
-"Porque eu amo você"
+"Porque eu amo você",
+"Não tem como colocar todos os motivos pq eles são infinitos"
 ];
 
 const container = document.getElementById("motivos-container");
