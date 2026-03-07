@@ -157,3 +157,109 @@ margin-top:20px;
 font-size:30px;
 margin-top:20px;
 }
+
+
+
+#especial{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(8px);
+border-radius:20px;
+margin:40px;
+padding:50px;
+}
+
+.texto-especial{
+max-width:700px;
+font-size:22px;
+line-height:1.8;
+}
+
+.linha{
+opacity:0;
+transform:translateY(40px);
+animation:aparecer 1s forwards;
+}
+
+.linha:nth-child(1){animation-delay:0.5s;}
+.linha:nth-child(2){animation-delay:1.5s;}
+.linha:nth-child(3){animation-delay:2.5s;}
+.linha:nth-child(4){animation-delay:3.5s;}
+.linha:nth-child(5){animation-delay:4.5s;}
+.linha:nth-child(6){animation-delay:5.5s;}
+
+.destaque{
+font-size:26px;
+font-weight:bold;
+color:#ffd6e8;
+}
+
+@keyframes aparecer{
+
+from{
+opacity:0;
+transform:translateY(40px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+
+
+
+/* carta escrevendo */
+
+#carta-animada{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(8px);
+padding:60px;
+}
+
+.maquina-escrever{
+font-size:24px;
+max-width:700px;
+line-height:1.7;
+}
+
+/* eu te amo gigante */
+
+#amor-gigante{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.eu-te-amo{
+font-size:80px;
+text-align:center;
+color:white;
+animation:pulsar 2s infinite;
+text-shadow:0 0 20px pink;
+}
+
+#nomeDelas{
+color:#ffd1e6;
+}
+
+@keyframes pulsar{
+
+0%{
+transform:scale(1);
+text-shadow:0 0 20px pink;
+}
+
+50%{
+transform:scale(1.1);
+text-shadow:0 0 50px #ff7fb0;
+}
+
+100%{
+transform:scale(1);
+text-shadow:0 0 20px pink;
+}
+
+}

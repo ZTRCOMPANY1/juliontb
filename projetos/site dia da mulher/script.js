@@ -84,7 +84,50 @@ criarCoracao();
 }
 
 
-const dataInicio = new Date("2024-01-01");
+/* carta que escreve sozinha */
+
+const textoCartaCompleto = `
+Desde o momento que você entrou na minha vida,
+tudo começou a fazer mais sentido.
+
+Seu sorriso ilumina meus dias,
+sua presença deixa tudo mais leve
+e cada momento ao seu lado se torna especial.
+
+Você é uma mulher incrível,
+forte, linda e cheia de qualidades que eu admiro muito.
+
+Sou muito grato por ter você comigo
+e por poder viver tantos momentos incríveis ao seu lado.
+
+Hoje, no Dia da Mulher,
+eu só quero te lembrar o quanto você é importante para mim.
+
+Eu te amo muito ❤️
+`;
+
+let posicao = 0;
+
+function escreverCarta(){
+
+const elemento = document.getElementById("textoCarta");
+
+if(posicao < textoCartaCompleto.length){
+
+elemento.innerHTML += textoCartaCompleto.charAt(posicao);
+
+posicao++;
+
+setTimeout(escreverCarta,40);
+
+}
+
+}
+
+escreverCarta();
+
+
+const dataInicio = new Date("2025-10-05");
 
 function atualizarTempo(){
 

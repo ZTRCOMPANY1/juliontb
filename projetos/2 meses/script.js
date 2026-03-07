@@ -126,5 +126,36 @@ playBtn.innerText="▶ Tocar Música";
 };
 
 
+// contador de qauntos dias estamos juntos
+
+function atualizarContador(){
+
+const inicio = new Date("2025-10-05 00:00:00"); // coloque a data que começaram
+const agora = new Date();
+
+let diff = agora - inicio;
+
+let segundos = Math.floor(diff/1000);
+let minutos = Math.floor(segundos/60);
+let horas = Math.floor(minutos/60);
+let dias = Math.floor(horas/24);
+
+let anos = Math.floor(dias/365);
+dias = dias % 365;
+
+let meses = Math.floor(dias/30);
+dias = dias % 30;
+
+horas = horas % 24;
+minutos = minutos % 60;
+segundos = segundos % 60;
+
+document.getElementById("contadorTempo").innerHTML =
+`${anos} anos • ${meses} meses • ${dias} dias • ${horas}h ${minutos}m ${segundos}s`;
+
+}
+
+setInterval(atualizarContador,1000);
+
 
 animate()
