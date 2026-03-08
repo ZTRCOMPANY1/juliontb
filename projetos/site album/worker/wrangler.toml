@@ -3,7 +3,7 @@ main = "src/index.js"
 compatibility_date = "2026-03-08"
 
 [vars]
-GITHUB_OWNER = "ztrcompany1"
+GITHUB_OWNER = "ZTRCOMPANY1"
 GITHUB_REPO = "album-storage"
 GITHUB_BRANCH = "main"
 APP_NAME = "Nosso Álbum"
