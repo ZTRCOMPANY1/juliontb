@@ -182,8 +182,8 @@
   <section id="loginScreen" class="login-wrap">
     <div class="panel login-box">
       <h2>💖 Nosso Álbum</h2>
-      <p class="muted">Login com Firebase Authentication, sincronização dos álbuns no Firestore e fotos/vídeos no Supabase Storage.</p>
-      <div class="warn">Para ficar simples, este modelo usa bucket público no Supabase. Os arquivos podem ser abertos por link direto se alguém tiver a URL.</div>
+      <p class="muted">Coloque email e senha e clique em criar conta.</p>
+      <div class="warn">Email e senha e depois criar conta.</div>
       <div style="height:12px"></div>
       <input id="emailInput" type="email" placeholder="Seu e-mail" />
       <div style="height:10px"></div>
@@ -211,7 +211,7 @@
     </div>
 
     <section class="panel">
-      <div class="notice">Os nomes dos álbuns e metadados sincronizam em tempo real pelo Firestore. Os arquivos ficam guardados no Supabase Storage.</div>
+      <div class="notice">Os albuns ficam sincronizados com qualquer um que tenha acesso ao site.</div>
       <div style="height:12px"></div>
       <div class="grid-tools">
         <input id="searchInput" type="text" placeholder="Pesquisar álbum..." />
@@ -286,7 +286,7 @@
     <div class="modal-box" style="width:min(760px,100%)">
       <h2>Configuração rápida</h2>
       <div class="muted">
-        1. No Firebase, ative Authentication com Email/Password.<br>
+        1. No Firebase, atives Authentication com Email/Password.<br>
         2. No Firebase, ative o Firestore.<br>
         3. No Supabase, crie o bucket <b>albums</b> como público.<br>
         4. Cole as chaves do Firebase e do Supabase abaixo no código.<br>
