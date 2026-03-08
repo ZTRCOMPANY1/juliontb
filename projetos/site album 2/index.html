@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosso Álbum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="bg-blur bg-blur-1"></div>
+  <div class="bg-blur bg-blur-2"></div>
+
+  <div id="loginScreen" class="auth-screen">
+    <div class="auth-card glass">
+      <div class="auth-badge">💖 Privado</div>
+      <h1>Nosso Álbum</h1>
+      <p>Guarde fotos, vídeos e momentos especiais em um espaço bonito, compartilhado e simples de usar.</p>
+
+      <form id="loginForm" class="auth-form">
+        <label>
+          <span>Usuário</span>
+          <input id="username" type="text" placeholder="Seu usuário" required />
+        </label>
+        <label>
+          <span>Senha</span>
+          <div class="password-wrap">
+            <input id="password" type="password" placeholder="Sua senha" required />
+            <button type="button" id="togglePassword" class="ghost tiny">Mostrar</button>
+          </div>
+        </label>
+        <button type="submit" class="primary big">Entrar</button>
+      </form>
+
+      <div class="auth-footer">
+        <span>✨ Álbuns compartilhados</span>
+        <span>🖼️ Fotos e vídeos</span>
+        <span>⬇️ Visualizar e baixar</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="app" class="app hidden">
+    <header class="topbar glass">
+      <div>
+        <p class="eyebrow">álbum digital</p>
+        <h2>Momentos de vocês</h2>
+      </div>
+      <div class="topbar-actions">
+        <button id="createAlbumBtn" class="primary">+ Novo álbum</button>
+        <button id="logoutBtn" class="ghost">Sair</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero glass">
+        <div>
+          <p class="hero-tag">🌙 Espaço compartilhado</p>
+          <h3>Crie álbuns, envie memórias e abra cada detalhe com um clique.</h3>
+          <p>Esse painel mostra todos os álbuns. Dentro de cada um, você pode enviar imagem ou vídeo, abrir em tela cheia, baixar e excluir.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <strong id="albumCount">0</strong>
+            <span>Álbuns</span>
+          </div>
+          <div class="stat-card">
+            <strong id="mediaCount">0</strong>
+            <span>Mídias</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h3>Seus álbuns</h3>
+          <input id="albumSearch" class="search-input" type="text" placeholder="Buscar álbum..." />
+        </div>
+        <div id="albumsGrid" class="albums-grid"></div>
+        <div id="albumsEmpty" class="empty-state hidden glass">
+          <div>📸</div>
+          <h4>Nenhum álbum ainda</h4>
+          <p>Crie o primeiro álbum para começar a guardar as memórias.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="albumModal" class="modal hidden">
+    <div class="modal-backdrop" data-close="albumModal"></div>
+    <div class="modal-panel large glass">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">conteúdo do álbum</p>
+          <h3 id="albumTitle">Álbum</h3>
+        </div>
+        <div class="modal-head-actions">
+          <button id="openUploadBtn" class="primary">+ Adicionar mídia</button>
+          <button class="ghost" data-close="albumModal">Fechar</button>
+        </div>
+      </div>
+
+      <div class="album-meta">
+        <span id="albumMetaText">0 itens</span>
+      </div>
+
+      <div id="mediaGrid" class="media-grid"></div>
+      <div id="mediaEmpty" class="empty-state hidden inner-empty">
+        <div>🎞️</div>
+        <h4>Esse álbum está vazio</h4>
+        <p>Adicione fotos ou vídeos para começar.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="uploadModal" class="modal hidden">
+    <div class="modal-backdrop" data-close="uploadModal"></div>
+    <div class="modal-panel glass">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">nova mídia</p>
+          <h3>Enviar foto ou vídeo</h3>
+        </div>
+        <button class="ghost" data-close="uploadModal">Fechar</button>
+      </div>
+
+      <form id="uploadForm" class="stack-form">
+        <label>
+          <span>Título da mídia</span>
+          <input id="mediaTitle" type="text" placeholder="Ex: Viagem no parque" required />
+        </label>
+        <label>
+          <span>Arquivo</span>
+          <input id="mediaFile" type="file" accept="image/*,video/*" required />
+        </label>
+        <div id="filePreviewHint" class="upload-hint">Aceita imagem e vídeo.</div>
+        <button id="uploadSubmitBtn" type="submit" class="primary big">Enviar</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="createAlbumModal" class="modal hidden">
+    <div class="modal-backdrop" data-close="createAlbumModal"></div>
+    <div class="modal-panel glass">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">novo álbum</p>
+          <h3>Criar álbum</h3>
+        </div>
+        <button class="ghost" data-close="createAlbumModal">Fechar</button>
+      </div>
+      <form id="createAlbumForm" class="stack-form">
+        <label>
+          <span>Nome do álbum</span>
+          <input id="newAlbumName" type="text" placeholder="Ex: Nosso fim de semana" required />
+        </label>
+        <label>
+          <span>Descrição</span>
+          <textarea id="newAlbumDescription" rows="4" placeholder="Escreva algo bonito sobre esse álbum..."></textarea>
+        </label>
+        <button type="submit" class="primary big">Criar álbum</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="viewerModal" class="modal hidden">
+    <div class="modal-backdrop dark" data-close="viewerModal"></div>
+    <div class="viewer-panel">
+      <button class="viewer-close" data-close="viewerModal">✕</button>
+      <div id="viewerContent" class="viewer-content"></div>
+      <div class="viewer-actions">
+        <div>
+          <h4 id="viewerTitle">Título</h4>
+          <p id="viewerInfo">Detalhes</p>
+        </div>
+        <div class="viewer-buttons">
+          <a id="downloadBtn" class="primary" download>Baixar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
