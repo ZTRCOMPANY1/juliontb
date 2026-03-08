@@ -502,7 +502,7 @@
       const filtered = albums.filter(album => !q || (album.name || '').toLowerCase().includes(q) || (album.description || '').toLowerCase().includes(q));
 
       if (!filtered.length) {
-        albumsGrid.innerHTML = '<div class="empty">Nenhum álbum ainda. Crie o primeiro momento especial de vocês 💖</div>';
+        albumsGrid.innerHTML = '<div class="empty">Nenhum álbum ainda.</div>';
         return;
       }
 
