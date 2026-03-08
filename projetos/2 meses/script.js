@@ -53,8 +53,8 @@ hearts.push({
 
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-size:Math.random()*20+10,
-speed:Math.random()*2+1
+size:Math.random()*10+10,
+speed:Math.random()*1+1
 
 })
 
@@ -62,7 +62,7 @@ speed:Math.random()*2+1
 
 function drawHeart(x,y,size){
 
-ctx.fillStyle="rgba(255,255,255,0.8)"
+ctx.fillStyle="rgba(241, 0, 0, 0.8)"
 ctx.beginPath()
 ctx.moveTo(x,y)
 ctx.bezierCurveTo(x-size/2,y-size/2,x-size,y+size/3,x,y+size)

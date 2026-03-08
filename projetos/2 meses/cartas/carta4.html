@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+body{
+
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+
+}
+
+.carta{
+
+max-width:600px;
+background:#fff8f8;
+padding:40px;
+border-radius:20px;
+color:#444;
+font-size:20px;
+line-height:1.6;
+
+}
+
+.cartaContainer{
+
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+
+background:white;
+color:#333;
+
+border-radius:15px;
+
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="cartaContainer">
+
+<h1>Agradeço por tudo amorzinho, <strong>EU TE AMO MEU AMOR</strong> </h1>
+
+<p>Nossa Amor Você não tem noção do quanto <strong>EU TE AMO MEU AMOR</strong> Sou Tão apaixonado em você meu amor, eu sou completamente obcecado em você, eu agradeço todos os disas de ter você em minha vida eu já tinha uma vida boa mas você chegou nela e deixou 100% PERFEITA MEU AMOR. </p>
+<p>Eu amo contar as historinha pra você meu amor, você fez eu pegar bastante jeitos que hoje em dia eu amo isso, como: contar historinha, mandar foto antes de sair, mandar loc, falar oque eu to fazendo em tempo real ehhehehehe, ligar a camera na cozinha e deixar você me vendo lá, são muitas coisas são até coisas simples mas que me fazem a total diferença, parece que quando você Chegou tudo ganhou cor meu amor então ta ai mais um motivo do porque EU TE AMO MEU AMOR.</p>
+<p>EU amo quando você manda em mim, me trata como seu cachorrinho eu gosto é assim do jeito que você é meu amor, mandona, ciumenta nuooossa quando você faz isso eu amo de mais meu amor, outra coisa que eu gosto bastante é quando você fala comigo com aquela voz docinha, deliciosa, vozinha de nenem meu coração derrete meu amor quando você faz aquilo meu amor, serio mesmo isso eu amo de mais.</p>
+<p>Eu amo tambem meu amor quando você me trata como um bebezinho, nuoossaa moxinho eu amo muuuuuuiiiitoooooooooo, quando você conversa comigo como bebezinho com aquela vozinha doce que você tem meu amor e quandp a gente não pode fala a gente fica falando por msg como bebezinho falando moxin eu amo amo amo amo amo amo amo amo amo amo amo amo</p>
+<p><strong>EU TE AMOOOOOOOOOOOO MAAAIX QUE VUXEEEE EU TE AMOOOOOOOOOOOO MAAAIX QUE VUXEEEE EU TE AMOOOOOOOOOOOO MAAAIX QUE VUXEEEE EU TE AMOOOOOOOOOOOO MAAAIX QUE VUXEEEE EU TE AMOOOOOOOOOOOO MAAAIX QUE VUXEEEE </strong></p>
+<a href="../index.html" class="btnVoltar">Voltar</a>
+
+</div>
+
+<!-- MUSICA -->
+
+<audio id="musica" autoplay loop>
+<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_4b5a4ed02e.mp3">
+</audio>
+
+<div style="position:fixed;bottom:20px;right:20px;background:rgba(0,0,0,0.6);padding:10px;border-radius:10px">
+
+<button id="muteBtn">🔊</button>
+
+<input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+
+</div>
+
+</body>
+
+<script>
+/* MUSICA */
+
+const musica = document.getElementById("musica")
+const muteBtn = document.getElementById("muteBtn")
+const volumeSlider = document.getElementById("volumeSlider")
+
+musica.volume = 0.5
+
+muteBtn.onclick = () => {
+
+musica.muted = !musica.muted
+muteBtn.innerText = musica.muted ? "🔇" : "🔊"
+
+}
+
+volumeSlider.oninput = () => {
+
+musica.volume = volumeSlider.value
+
+}
+
+</script>
+</html>

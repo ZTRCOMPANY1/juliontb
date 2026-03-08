@@ -103,7 +103,31 @@ e por poder viver tantos momentos incríveis ao seu lado.
 Hoje, no Dia da Mulher,
 eu só quero te lembrar o quanto você é importante para mim.
 
-Eu te amo muito ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+Eu te amo muito maix que vuxe ❤️
+
+
+
 `;
 
 let posicao = 0;
