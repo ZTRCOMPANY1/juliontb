@@ -4,186 +4,775 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nosso Álbum</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css" />
+  <style>
+    :root {
+      --bg1: #120c18;
+      --bg2: #24142c;
+      --card: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.12);
+      --text: #fff8fc;
+      --muted: #d8c6d2;
+      --pink: #ff5fa2;
+      --pink-2: #ff8dc0;
+      --danger: #ff5a6a;
+      --ok: #71e3aa;
+      --shadow: 0 20px 50px rgba(0,0,0,0.35);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: radial-gradient(circle at top, #332040 0%, var(--bg1) 40%, #09070c 100%); color: var(--text); }
+    body { min-height: 100vh; }
+
+    .hearts {
+      position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0;
+    }
+    .heart {
+      position: absolute; bottom: -40px; font-size: 18px; opacity: 0.18; animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(0) scale(1) rotate(0deg); }
+      to { transform: translateY(-120vh) scale(1.4) rotate(25deg); }
+    }
+
+    .app { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+    .topbar {
+      display: flex; gap: 16px; justify-content: space-between; align-items: center; flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .brand h1 { margin: 0; font-size: clamp(28px, 4vw, 46px); }
+    .brand p { margin: 8px 0 0; color: var(--muted); }
+
+    .panel, .card, .modal-box {
+      background: var(--card);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    button, .btn, input, textarea {
+      font: inherit;
+    }
+    button, .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      color: white;
+      background: linear-gradient(135deg, var(--pink), var(--pink-2));
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    button:hover, .btn:hover { transform: translateY(-1px); }
+    button.secondary { background: rgba(255,255,255,0.09); border: 1px solid var(--line); }
+    button.danger { background: linear-gradient(135deg, #ff4e68, #ff7a7a); }
+    button.ok { background: linear-gradient(135deg, #46c98c, #76e1b0); }
+    button:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    .panel {
+      padding: 18px;
+      margin-bottom: 20px;
+      display: grid;
+      gap: 12px;
+    }
+    .grid-tools {
+      display: grid;
+      grid-template-columns: 1.4fr .8fr .8fr;
+      gap: 12px;
+    }
+    input[type="text"], input[type="password"], textarea, input[type="file"] {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      padding: 12px 14px;
+      outline: none;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+
+    .albums {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 240px;
+    }
+    .cover {
+      height: 150px;
+      background: linear-gradient(135deg, rgba(255,95,162,.5), rgba(255,141,192,.18));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+    .cover img, .cover video { width: 100%; height: 100%; object-fit: cover; }
+    .card-body { padding: 16px; display: grid; gap: 10px; }
+    .card-body h3 { margin: 0; }
+    .muted { color: var(--muted); }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .row-between { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+
+    .hidden { display: none !important; }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+    .media-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+    }
+    .media-preview {
+      height: 180px;
+      display: block;
+      width: 100%;
+      object-fit: cover;
+      background: #111;
+      cursor: pointer;
+    }
+    .media-info { padding: 12px; display: grid; gap: 10px; }
+    .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 20px;
+    }
+
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 20;
+      display: flex; align-items: center; justify-content: center; padding: 18px;
+    }
+    .modal-box {
+      width: min(940px, 100%);
+      max-height: 92vh;
+      overflow: auto;
+      padding: 20px;
+    }
+    .viewer-box {
+      width: min(980px, 100%);
+    }
+    .viewer-media {
+      width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 18px;
+      background: #000;
+    }
+
+    .login-wrap {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+    .login-box {
+      width: min(460px, 100%);
+      padding: 24px;
+    }
+    .login-box h2 { margin-top: 0; }
+    .info {
+      padding: 12px 14px; border-radius: 14px; background: rgba(113,227,170,.12); border: 1px solid rgba(113,227,170,.2); color: #dff8ea;
+    }
+    .warning {
+      padding: 12px 14px; border-radius: 14px; background: rgba(255,90,106,.11); border: 1px solid rgba(255,90,106,.22); color: #ffd9df;
+    }
+
+    @media (max-width: 760px) {
+      .grid-tools { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
-  <div class="bg-blur bg-blur-1"></div>
-  <div class="bg-blur bg-blur-2"></div>
+  <div class="hearts" id="hearts"></div>
 
-  <div id="loginScreen" class="auth-screen">
-    <div class="auth-card glass">
-      <div class="auth-badge">💖 Privado</div>
-      <h1>Nosso Álbum</h1>
-      <p>Guarde fotos, vídeos e momentos especiais em um espaço bonito, compartilhado e simples de usar.</p>
+  <section id="loginScreen" class="login-wrap">
+    <div class="panel login-box">
+      <h2>💖 Nosso Álbum</h2>
+      <p class="muted">Versão simples, sem backend. Tudo fica salvo no navegador. Para compartilhar com sua namorada, use <b>Exportar backup</b> e depois <b>Importar backup</b> no outro aparelho.</p>
+      <div class="warning">Login local simples: você define o usuário e senha na primeira vez. Depois entra com os mesmos dados nesse navegador.</div>
+      <div style="height:12px"></div>
+      <input id="loginUser" type="text" placeholder="Nome de usuário" />
+      <div style="height:10px"></div>
+      <input id="loginPass" type="password" placeholder="Senha" />
+      <div style="height:10px"></div>
+      <button id="loginBtn">Entrar / Criar acesso</button>
+      <div style="height:12px"></div>
+      <div id="loginMsg" class="muted"></div>
+    </div>
+  </section>
 
-      <form id="loginForm" class="auth-form">
-        <label>
-          <span>Usuário</span>
-          <input id="username" type="text" placeholder="Seu usuário" required />
-        </label>
-        <label>
-          <span>Senha</span>
-          <div class="password-wrap">
-            <input id="password" type="password" placeholder="Sua senha" required />
-            <button type="button" id="togglePassword" class="ghost tiny">Mostrar</button>
-          </div>
-        </label>
-        <button type="submit" class="primary big">Entrar</button>
-      </form>
-
-      <div class="auth-footer">
-        <span>✨ Álbuns compartilhados</span>
-        <span>🖼️ Fotos e vídeos</span>
-        <span>⬇️ Visualizar e baixar</span>
+  <main id="appScreen" class="app hidden">
+    <div class="topbar">
+      <div class="brand">
+        <h1>💞 Nosso Álbum</h1>
+        <p>Guarde fotos, vídeos e momentos especiais de vocês.</p>
+      </div>
+      <div class="actions">
+        <button class="secondary" id="exportBtn">Exportar backup</button>
+        <label class="btn secondary" for="importInput">Importar backup</label>
+        <input id="importInput" type="file" accept="application/json" class="hidden" />
+        <button class="secondary" id="logoutBtn">Sair</button>
       </div>
     </div>
-  </div>
 
-  <div id="app" class="app hidden">
-    <header class="topbar glass">
-      <div>
-        <p class="eyebrow">álbum digital</p>
-        <h2>Momentos de vocês</h2>
+    <section class="panel">
+      <div class="info">Sem backend e sem servidor. Mais fácil de usar, mas os dados ficam salvos localmente neste navegador. Para os dois terem o mesmo conteúdo, exporte o backup e importe no outro aparelho.</div>
+      <div class="grid-tools">
+        <input id="searchInput" type="text" placeholder="Pesquisar álbum..." />
+        <button id="newAlbumBtn">+ Criar álbum</button>
+        <button class="secondary" id="clearAllBtn">Apagar tudo</button>
       </div>
-      <div class="topbar-actions">
-        <button id="createAlbumBtn" class="primary">+ Novo álbum</button>
-        <button id="logoutBtn" class="ghost">Sair</button>
-      </div>
-    </header>
+    </section>
 
-    <main class="container">
-      <section class="hero glass">
-        <div>
-          <p class="hero-tag">🌙 Espaço compartilhado</p>
-          <h3>Crie álbuns, envie memórias e abra cada detalhe com um clique.</h3>
-          <p>Esse painel mostra todos os álbuns. Dentro de cada um, você pode enviar imagem ou vídeo, abrir em tela cheia, baixar e excluir.</p>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-card">
-            <strong id="albumCount">0</strong>
-            <span>Álbuns</span>
-          </div>
-          <div class="stat-card">
-            <strong id="mediaCount">0</strong>
-            <span>Mídias</span>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="section-head">
-          <h3>Seus álbuns</h3>
-          <input id="albumSearch" class="search-input" type="text" placeholder="Buscar álbum..." />
-        </div>
-        <div id="albumsGrid" class="albums-grid"></div>
-        <div id="albumsEmpty" class="empty-state hidden glass">
-          <div>📸</div>
-          <h4>Nenhum álbum ainda</h4>
-          <p>Crie o primeiro álbum para começar a guardar as memórias.</p>
-        </div>
-      </section>
-    </main>
-  </div>
+    <section id="albumsWrap">
+      <div id="albumsGrid" class="albums"></div>
+    </section>
+  </main>
 
   <div id="albumModal" class="modal hidden">
-    <div class="modal-backdrop" data-close="albumModal"></div>
-    <div class="modal-panel large glass">
-      <div class="modal-head">
+    <div class="modal-box">
+      <div class="row-between">
         <div>
-          <p class="eyebrow">conteúdo do álbum</p>
-          <h3 id="albumTitle">Álbum</h3>
+          <h2 id="albumTitle" style="margin:0"></h2>
+          <div id="albumDesc" class="muted"></div>
         </div>
-        <div class="modal-head-actions">
-          <button id="openUploadBtn" class="primary">+ Adicionar mídia</button>
-          <button class="ghost" data-close="albumModal">Fechar</button>
+        <div class="row">
+          <button id="addMediaBtn">Adicionar foto/vídeo</button>
+          <button id="editAlbumBtn" class="secondary">Editar</button>
+          <button id="deleteAlbumBtn" class="danger">Excluir álbum</button>
+          <button id="closeAlbumBtn" class="secondary">Fechar</button>
         </div>
       </div>
-
-      <div class="album-meta">
-        <span id="albumMetaText">0 itens</span>
-      </div>
-
+      <div style="height:18px"></div>
       <div id="mediaGrid" class="media-grid"></div>
-      <div id="mediaEmpty" class="empty-state hidden inner-empty">
-        <div>🎞️</div>
-        <h4>Esse álbum está vazio</h4>
-        <p>Adicione fotos ou vídeos para começar.</p>
-      </div>
     </div>
   </div>
 
-  <div id="uploadModal" class="modal hidden">
-    <div class="modal-backdrop" data-close="uploadModal"></div>
-    <div class="modal-panel glass">
-      <div class="modal-head">
-        <div>
-          <p class="eyebrow">nova mídia</p>
-          <h3>Enviar foto ou vídeo</h3>
+  <div id="formModal" class="modal hidden">
+    <div class="modal-box" style="width:min(640px,100%)">
+      <h2 id="formTitle">Criar álbum</h2>
+      <div class="row" id="albumFields">
+        <div style="width:100%">
+          <input id="albumNameInput" type="text" placeholder="Nome do álbum" />
         </div>
-        <button class="ghost" data-close="uploadModal">Fechar</button>
+        <div style="width:100%">
+          <textarea id="albumDescInput" placeholder="Descrição do álbum"></textarea>
+        </div>
       </div>
 
-      <form id="uploadForm" class="stack-form">
-        <label>
-          <span>Título da mídia</span>
-          <input id="mediaTitle" type="text" placeholder="Ex: Viagem no parque" required />
-        </label>
-        <label>
-          <span>Arquivo</span>
-          <input id="mediaFile" type="file" accept="image/*,video/*" required />
-        </label>
-        <div id="filePreviewHint" class="upload-hint">Aceita imagem e vídeo.</div>
-        <button id="uploadSubmitBtn" type="submit" class="primary big">Enviar</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="createAlbumModal" class="modal hidden">
-    <div class="modal-backdrop" data-close="createAlbumModal"></div>
-    <div class="modal-panel glass">
-      <div class="modal-head">
-        <div>
-          <p class="eyebrow">novo álbum</p>
-          <h3>Criar álbum</h3>
-        </div>
-        <button class="ghost" data-close="createAlbumModal">Fechar</button>
+      <div id="mediaFields" class="hidden">
+        <input id="mediaFileInput" type="file" accept="image/*,video/*" />
+        <div style="height:10px"></div>
+        <input id="mediaCaptionInput" type="text" placeholder="Legenda opcional" />
       </div>
-      <form id="createAlbumForm" class="stack-form">
-        <label>
-          <span>Nome do álbum</span>
-          <input id="newAlbumName" type="text" placeholder="Ex: Nosso fim de semana" required />
-        </label>
-        <label>
-          <span>Descrição</span>
-          <textarea id="newAlbumDescription" rows="4" placeholder="Escreva algo bonito sobre esse álbum..."></textarea>
-        </label>
-        <button type="submit" class="primary big">Criar álbum</button>
-      </form>
+
+      <div style="height:16px"></div>
+      <div class="row">
+        <button id="saveFormBtn" class="ok">Salvar</button>
+        <button id="cancelFormBtn" class="secondary">Cancelar</button>
+      </div>
+      <div style="height:10px"></div>
+      <div id="formMsg" class="muted"></div>
     </div>
   </div>
 
   <div id="viewerModal" class="modal hidden">
-    <div class="modal-backdrop dark" data-close="viewerModal"></div>
-    <div class="viewer-panel">
-      <button class="viewer-close" data-close="viewerModal">✕</button>
-      <div id="viewerContent" class="viewer-content"></div>
-      <div class="viewer-actions">
-        <div>
-          <h4 id="viewerTitle">Título</h4>
-          <p id="viewerInfo">Detalhes</p>
-        </div>
-        <div class="viewer-buttons">
-          <a id="downloadBtn" class="primary" download>Baixar</a>
+    <div class="modal-box viewer-box">
+      <div class="row-between">
+        <h2 id="viewerTitle" style="margin:0">Visualizar</h2>
+        <div class="row">
+          <a id="downloadBtn" class="btn ok" download>Baixar</a>
+          <button id="deleteMediaBtn" class="danger">Excluir</button>
+          <button id="closeViewerBtn" class="secondary">Fechar</button>
         </div>
       </div>
+      <div style="height:18px"></div>
+      <div id="viewerContent"></div>
+      <div style="height:12px"></div>
+      <div id="viewerCaption" class="muted"></div>
     </div>
   </div>
 
-  <div id="toast" class="toast hidden"></div>
+  <script>
+    const STORAGE_KEY = 'nosso_album_data_v1';
+    const AUTH_KEY = 'nosso_album_auth_v1';
 
-  <script src="./app.js"></script>
+    const loginScreen = document.getElementById('loginScreen');
+    const appScreen = document.getElementById('appScreen');
+    const loginUser = document.getElementById('loginUser');
+    const loginPass = document.getElementById('loginPass');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginMsg = document.getElementById('loginMsg');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    const albumsGrid = document.getElementById('albumsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const newAlbumBtn = document.getElementById('newAlbumBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const importInput = document.getElementById('importInput');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+
+    const albumModal = document.getElementById('albumModal');
+    const albumTitle = document.getElementById('albumTitle');
+    const albumDesc = document.getElementById('albumDesc');
+    const mediaGrid = document.getElementById('mediaGrid');
+    const closeAlbumBtn = document.getElementById('closeAlbumBtn');
+    const addMediaBtn = document.getElementById('addMediaBtn');
+    const editAlbumBtn = document.getElementById('editAlbumBtn');
+    const deleteAlbumBtn = document.getElementById('deleteAlbumBtn');
+
+    const formModal = document.getElementById('formModal');
+    const formTitle = document.getElementById('formTitle');
+    const albumFields = document.getElementById('albumFields');
+    const mediaFields = document.getElementById('mediaFields');
+    const albumNameInput = document.getElementById('albumNameInput');
+    const albumDescInput = document.getElementById('albumDescInput');
+    const mediaFileInput = document.getElementById('mediaFileInput');
+    const mediaCaptionInput = document.getElementById('mediaCaptionInput');
+    const saveFormBtn = document.getElementById('saveFormBtn');
+    const cancelFormBtn = document.getElementById('cancelFormBtn');
+    const formMsg = document.getElementById('formMsg');
+
+    const viewerModal = document.getElementById('viewerModal');
+    const viewerTitle = document.getElementById('viewerTitle');
+    const viewerContent = document.getElementById('viewerContent');
+    const viewerCaption = document.getElementById('viewerCaption');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const deleteMediaBtn = document.getElementById('deleteMediaBtn');
+    const closeViewerBtn = document.getElementById('closeViewerBtn');
+
+    let state = loadState();
+    let currentAlbumId = null;
+    let currentMediaId = null;
+    let formMode = null;
+
+    function createHearts() {
+      const hearts = document.getElementById('hearts');
+      const icons = ['💖','💗','💕','💘','💞'];
+      for (let i = 0; i < 22; i++) {
+        const span = document.createElement('span');
+        span.className = 'heart';
+        span.textContent = icons[Math.floor(Math.random() * icons.length)];
+        span.style.left = Math.random() * 100 + 'vw';
+        span.style.animationDuration = (8 + Math.random() * 10) + 's';
+        span.style.animationDelay = (Math.random() * 8) + 's';
+        span.style.fontSize = (14 + Math.random() * 24) + 'px';
+        hearts.appendChild(span);
+      }
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { users: [], albums: [] };
+        const parsed = JSON.parse(raw);
+        return {
+          users: Array.isArray(parsed.users) ? parsed.users : [],
+          albums: Array.isArray(parsed.albums) ? parsed.albums : []
+        };
+      } catch {
+        return { users: [], albums: [] };
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function getSessionUser() {
+      try {
+        return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
+      } catch {
+        return null;
+      }
+    }
+
+    function setSessionUser(user) {
+      localStorage.setItem(AUTH_KEY, JSON.stringify(user));
+    }
+
+    function clearSession() {
+      localStorage.removeItem(AUTH_KEY);
+    }
+
+    function uid() {
+      return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    }
+
+    async function sha256(text) {
+      const data = new TextEncoder().encode(text);
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      return [...new Uint8Array(hash)].map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function handleLogin() {
+      const username = loginUser.value.trim();
+      const password = loginPass.value;
+      if (!username || !password) {
+        loginMsg.textContent = 'Preencha usuário e senha.';
+        return;
+      }
+      const passwordHash = await sha256(password);
+      const existing = state.users.find(u => u.username === username);
+
+      if (!existing) {
+        state.users.push({ id: uid(), username, passwordHash, createdAt: new Date().toISOString() });
+        saveState();
+        setSessionUser({ username });
+        loginMsg.textContent = 'Acesso criado com sucesso.';
+        showApp();
+        return;
+      }
+
+      if (existing.passwordHash !== passwordHash) {
+        loginMsg.textContent = 'Senha incorreta.';
+        return;
+      }
+
+      setSessionUser({ username });
+      showApp();
+    }
+
+    function showApp() {
+      loginScreen.classList.add('hidden');
+      appScreen.classList.remove('hidden');
+      renderAlbums();
+    }
+
+    function showLogin() {
+      appScreen.classList.add('hidden');
+      loginScreen.classList.remove('hidden');
+    }
+
+    function renderAlbums() {
+      const q = searchInput.value.trim().toLowerCase();
+      const albums = state.albums.filter(album => {
+        return !q || album.name.toLowerCase().includes(q) || (album.description || '').toLowerCase().includes(q);
+      });
+
+      if (!albums.length) {
+        albumsGrid.innerHTML = '<div class="empty">Nenhum álbum encontrado. Crie o primeiro momento especial de vocês 💖</div>';
+        return;
+      }
+
+      albumsGrid.innerHTML = albums.map(album => {
+        const cover = album.items?.[0];
+        let coverHtml = '💞';
+        if (cover) {
+          coverHtml = cover.type.startsWith('image/')
+            ? `<img src="${cover.data}" alt="${escapeHtml(cover.caption || album.name)}">`
+            : `<video src="${cover.data}" muted></video>`;
+        }
+
+        return `
+          <article class="card">
+            <div class="cover">${coverHtml}</div>
+            <div class="card-body">
+              <div class="row-between">
+                <h3>${escapeHtml(album.name)}</h3>
+                <span class="tag">${album.items.length} item(ns)</span>
+              </div>
+              <div class="muted">${escapeHtml(album.description || 'Sem descrição')}</div>
+              <div class="row">
+                <button onclick="openAlbum('${album.id}')">Abrir</button>
+                <button class="secondary" onclick="openEditAlbum('${album.id}')">Editar</button>
+                <button class="danger" onclick="removeAlbum('${album.id}')">Excluir</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    window.openAlbum = function(albumId) {
+      currentAlbumId = albumId;
+      const album = state.albums.find(a => a.id === albumId);
+      if (!album) return;
+      albumTitle.textContent = album.name;
+      albumDesc.textContent = album.description || 'Sem descrição';
+
+      if (!album.items.length) {
+        mediaGrid.innerHTML = '<div class="empty">Este álbum ainda está vazio. Adicione uma foto ou vídeo.</div>';
+      } else {
+        mediaGrid.innerHTML = album.items.map(item => `
+          <div class="media-item">
+            ${item.type.startsWith('image/')
+              ? `<img class="media-preview" src="${item.data}" alt="${escapeHtml(item.caption || 'Foto')}" onclick="openViewer('${album.id}','${item.id}')">`
+              : `<video class="media-preview" src="${item.data}" onclick="openViewer('${album.id}','${item.id}')"></video>`
+            }
+            <div class="media-info">
+              <div class="row-between">
+                <span class="tag">${item.type.startsWith('image/') ? 'Foto' : 'Vídeo'}</span>
+                <span class="muted">${formatSize(item.size || 0)}</span>
+              </div>
+              <div>${escapeHtml(item.caption || 'Sem legenda')}</div>
+              <div class="row">
+                <button onclick="openViewer('${album.id}','${item.id}')">Ver</button>
+                <a class="btn ok" href="${item.data}" download="${escapeHtmlAttr(item.filename || 'arquivo')}">Baixar</a>
+                <button class="danger" onclick="removeMedia('${album.id}','${item.id}')">Excluir</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      albumModal.classList.remove('hidden');
+    }
+
+    window.openEditAlbum = function(albumId) {
+      const album = state.albums.find(a => a.id === albumId);
+      if (!album) return;
+      formMode = 'edit-album';
+      currentAlbumId = albumId;
+      formTitle.textContent = 'Editar álbum';
+      formMsg.textContent = '';
+      albumFields.classList.remove('hidden');
+      mediaFields.classList.add('hidden');
+      albumNameInput.value = album.name;
+      albumDescInput.value = album.description || '';
+      formModal.classList.remove('hidden');
+    }
+
+    window.removeAlbum = function(albumId) {
+      const album = state.albums.find(a => a.id === albumId);
+      if (!album) return;
+      if (!confirm(`Excluir o álbum "${album.name}"?`)) return;
+      state.albums = state.albums.filter(a => a.id !== albumId);
+      saveState();
+      renderAlbums();
+      if (currentAlbumId === albumId) albumModal.classList.add('hidden');
+    }
+
+    function openCreateAlbum() {
+      formMode = 'create-album';
+      formTitle.textContent = 'Criar álbum';
+      formMsg.textContent = '';
+      albumFields.classList.remove('hidden');
+      mediaFields.classList.add('hidden');
+      albumNameInput.value = '';
+      albumDescInput.value = '';
+      formModal.classList.remove('hidden');
+    }
+
+    function openAddMedia() {
+      formMode = 'add-media';
+      formTitle.textContent = 'Adicionar foto ou vídeo';
+      formMsg.textContent = '';
+      albumFields.classList.add('hidden');
+      mediaFields.classList.remove('hidden');
+      mediaFileInput.value = '';
+      mediaCaptionInput.value = '';
+      formModal.classList.remove('hidden');
+    }
+
+    async function saveForm() {
+      formMsg.textContent = '';
+
+      if (formMode === 'create-album') {
+        const name = albumNameInput.value.trim();
+        const description = albumDescInput.value.trim();
+        if (!name) {
+          formMsg.textContent = 'Digite o nome do álbum.';
+          return;
+        }
+        state.albums.unshift({ id: uid(), name, description, createdAt: new Date().toISOString(), items: [] });
+        saveState();
+        formModal.classList.add('hidden');
+        renderAlbums();
+        return;
+      }
+
+      if (formMode === 'edit-album') {
+        const album = state.albums.find(a => a.id === currentAlbumId);
+        if (!album) return;
+        const name = albumNameInput.value.trim();
+        if (!name) {
+          formMsg.textContent = 'Digite o nome do álbum.';
+          return;
+        }
+        album.name = name;
+        album.description = albumDescInput.value.trim();
+        saveState();
+        formModal.classList.add('hidden');
+        renderAlbums();
+        openAlbum(album.id);
+        return;
+      }
+
+      if (formMode === 'add-media') {
+        const file = mediaFileInput.files[0];
+        const caption = mediaCaptionInput.value.trim();
+        if (!file) {
+          formMsg.textContent = 'Escolha uma foto ou vídeo.';
+          return;
+        }
+        const max = 25 * 1024 * 1024;
+        if (file.size > max) {
+          formMsg.textContent = 'Arquivo muito grande. Use até 25MB.';
+          return;
+        }
+        const album = state.albums.find(a => a.id === currentAlbumId);
+        if (!album) return;
+        const data = await fileToDataURL(file);
+        album.items.unshift({
+          id: uid(),
+          type: file.type,
+          filename: file.name,
+          caption,
+          size: file.size,
+          data,
+          createdAt: new Date().toISOString()
+        });
+        saveState();
+        formModal.classList.add('hidden');
+        renderAlbums();
+        openAlbum(album.id);
+      }
+    }
+
+    async function fileToDataURL(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    window.openViewer = function(albumId, mediaId) {
+      currentAlbumId = albumId;
+      currentMediaId = mediaId;
+      const album = state.albums.find(a => a.id === albumId);
+      const item = album?.items.find(i => i.id === mediaId);
+      if (!item) return;
+
+      viewerTitle.textContent = item.filename || 'Arquivo';
+      viewerCaption.textContent = item.caption || 'Sem legenda';
+      downloadBtn.href = item.data;
+      downloadBtn.download = item.filename || 'arquivo';
+
+      viewerContent.innerHTML = item.type.startsWith('image/')
+        ? `<img class="viewer-media" src="${item.data}" alt="${escapeHtml(item.caption || item.filename || 'Imagem')}">`
+        : `<video class="viewer-media" src="${item.data}" controls autoplay></video>`;
+
+      viewerModal.classList.remove('hidden');
+    }
+
+    window.removeMedia = function(albumId, mediaId) {
+      const album = state.albums.find(a => a.id === albumId);
+      const item = album?.items.find(i => i.id === mediaId);
+      if (!album || !item) return;
+      if (!confirm(`Excluir "${item.filename}"?`)) return;
+      album.items = album.items.filter(i => i.id !== mediaId);
+      saveState();
+      renderAlbums();
+      openAlbum(albumId);
+      if (currentMediaId === mediaId) viewerModal.classList.add('hidden');
+    }
+
+    function exportBackup() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'nosso-album-backup.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importBackup(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          if (!Array.isArray(parsed.albums) || !Array.isArray(parsed.users)) {
+            alert('Backup inválido.');
+            return;
+          }
+          state = parsed;
+          saveState();
+          renderAlbums();
+          alert('Backup importado com sucesso.');
+        } catch {
+          alert('Não foi possível importar esse arquivo.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, s => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[s]));
+    }
+    function escapeHtmlAttr(str) {
+      return escapeHtml(str).replace(/`/g, '');
+    }
+
+    loginBtn.addEventListener('click', handleLogin);
+    logoutBtn.addEventListener('click', () => { clearSession(); showLogin(); });
+    newAlbumBtn.addEventListener('click', openCreateAlbum);
+    closeAlbumBtn.addEventListener('click', () => albumModal.classList.add('hidden'));
+    addMediaBtn.addEventListener('click', openAddMedia);
+    editAlbumBtn.addEventListener('click', () => openEditAlbum(currentAlbumId));
+    deleteAlbumBtn.addEventListener('click', () => removeAlbum(currentAlbumId));
+    saveFormBtn.addEventListener('click', saveForm);
+    cancelFormBtn.addEventListener('click', () => formModal.classList.add('hidden'));
+    closeViewerBtn.addEventListener('click', () => viewerModal.classList.add('hidden'));
+    deleteMediaBtn.addEventListener('click', () => removeMedia(currentAlbumId, currentMediaId));
+    searchInput.addEventListener('input', renderAlbums);
+    exportBtn.addEventListener('click', exportBackup);
+    importInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) importBackup(file);
+      e.target.value = '';
+    });
+    clearAllBtn.addEventListener('click', () => {
+      if (!confirm('Apagar todos os álbuns e mídias deste navegador?')) return;
+      state.albums = [];
+      saveState();
+      renderAlbums();
+    });
+
+    albumModal.addEventListener('click', e => { if (e.target === albumModal) albumModal.classList.add('hidden'); });
+    formModal.addEventListener('click', e => { if (e.target === formModal) formModal.classList.add('hidden'); });
+    viewerModal.addEventListener('click', e => { if (e.target === viewerModal) viewerModal.classList.add('hidden'); });
+
+    createHearts();
+    if (getSessionUser()) showApp();
+  </script>
 </body>
 </html>
