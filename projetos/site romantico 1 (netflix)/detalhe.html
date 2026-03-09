@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Detalhes do Momento</title>
+  <title>Detalhe da Foto | LOVEFLIX</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar">
-    <div class="logo">LOVEFLIX</div>
-    <nav class="nav">
-      <a href="index.html">Início</a>
-      <a href="historia.html">Nossa História</a>
-    </nav>
+    <div class="topbar-left">
+      <a href="index.html" class="brand">LOVEFLIX</a>
+      <nav class="nav">
+        <a href="index.html">Início</a>
+        <a href="historia.html" class="active">Nossa História</a>
+      </nav>
+    </div>
+    <div class="topbar-right">
+      <button id="logoutBtn" class="logout-btn">Sair</button>
+    </div>
   </header>
 
-  <main class="detail-page">
-    <div class="detail-container" id="detailContainer">
-      <!-- Conteúdo inserido via JS -->
-    </div>
+  <main class="detail-page" id="detailContainer">
+    <!-- conteúdo gerado pelo JS -->
   </main>
 
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

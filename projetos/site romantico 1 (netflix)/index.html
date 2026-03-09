@@ -3,65 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nossa Netflix do Amor</title>
+  <title>LOVEFLIX</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar">
-    <div class="logo">LOVEFLIX</div>
-    <nav class="nav">
-      <a href="index.html" class="active">Início</a>
-      <a href="historia.html">Nossa História</a>
-    </nav>
+    <div class="topbar-left">
+      <a href="index.html" class="brand">LOVEFLIX</a>
+      <nav class="nav">
+        <a href="index.html" class="active">Início</a>
+        <a href="historia.html">Nossa História</a>
+      </nav>
+    </div>
+    <div class="topbar-right">
+      <button id="logoutBtn" class="logout-btn">Sair</button>
+    </div>
   </header>
 
-  <main>
-    <section class="hero" id="hero">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <span class="hero-badge">Série Original do Nosso Amor</span>
-        <h1 id="heroTitle">Nossa História</h1>
-        <p id="heroDescription">
-          Uma jornada cheia de momentos especiais, fotos inesquecíveis e lembranças
-          que marcaram nossa vida juntos.
-        </p>
-        <div class="hero-buttons">
-          <a href="historia.html" class="btn btn-primary">Ver história</a>
-          <a href="#linhaDoTempo" class="btn btn-secondary">Explorar momentos</a>
-        </div>
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-tag">Série exclusiva</p>
+      <h1>Nossa História</h1>
+      <p class="hero-text">
+        Uma história feita de momentos, memórias, fotos, vídeos e muito amor.
+        Cada capítulo guarda um pedacinho da nossa caminhada juntos.
+      </p>
+      <div class="hero-buttons">
+        <a href="historia.html" class="btn btn-primary">Ver nossa história</a>
+        <a href="#linha-do-tempo" class="btn btn-secondary">Explorar momentos</a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="content-section" id="linhaDoTempo">
-      <div class="section-header">
-        <h2>Momentos especiais</h2>
-      </div>
-
-      <div class="carousel-wrapper">
-        <button class="carousel-btn left" data-target="carouselMomentos">&#10094;</button>
-
-        <div class="carousel" id="carouselMomentos"></div>
-
-        <button class="carousel-btn right" data-target="carouselMomentos">&#10095;</button>
-      </div>
-    </section>
-
-    <section class="content-section">
-      <div class="section-header">
-        <h2>Vídeos marcantes</h2>
-      </div>
-
-      <div class="carousel-wrapper">
-        <button class="carousel-btn left" data-target="carouselVideos">&#10094;</button>
-
-        <div class="carousel" id="carouselVideos"></div>
-
-        <button class="carousel-btn right" data-target="carouselVideos">&#10095;</button>
-      </div>
+  <main class="content">
+    <section class="row-section" id="linha-do-tempo">
+      <h2>Capítulos da nossa história</h2>
+      <div class="scroll-row" id="homeRow"></div>
     </section>
   </main>
 
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
