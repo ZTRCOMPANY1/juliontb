@@ -19,7 +19,7 @@
       <div class="brand-logo">🛠️</div>
       <div>
         <h1>Painel Admin</h1>
-        <p>Adicionar filmes, cards e perguntas</p>
+        <p>Adicionar filmes, editar perguntas e gerenciar cards</p>
       </div>
     </div>
 
@@ -33,36 +33,31 @@
     <section class="hero-banner glass">
       <div class="hero-copy">
         <span class="pill">Área administrativa</span>
-        <h2>Cadastre novos filmes e perguntas</h2>
-        <p>Somente usuários com <strong>isAdmin: true</strong> no Firestore podem usar esta página.</p>
+        <h2>Cadastre filme e perguntas tudo junto</h2>
+        <p>Você pode montar o filme inteiro em rascunho, ver as perguntas abaixo e só depois enviar tudo de uma vez.</p>
       </div>
     </section>
 
-    <section class="admin-grid">
+    <section class="admin-grid admin-grid-creation">
       <div class="admin-card glass">
-        <h3>Cadastrar filme</h3>
-        <form id="movieForm" class="form-grid">
+        <h3>1) Dados do filme</h3>
+        <form id="movieDraftForm" class="form-grid">
           <input type="text" id="movieTitle" placeholder="Nome do filme / série" required />
           <input type="text" id="movieImage" placeholder="URL da capa do card" required />
           <textarea id="movieDescription" placeholder="Descrição curta" rows="4" required></textarea>
-          <button type="submit" class="primary-btn">Salvar filme</button>
         </form>
       </div>
 
       <div class="admin-card glass">
-        <h3>Adicionar pergunta</h3>
-        <form id="questionForm" class="form-grid">
-          <select id="questionMovieSelect" required>
-            <option value="">Selecione um filme</option>
-          </select>
+        <h3>2) Adicionar pergunta ao rascunho</h3>
+        <form id="draftQuestionForm" class="form-grid">
+          <input type="text" id="draftQuestionInput" placeholder="Pergunta" required />
+          <input type="text" id="draftOption1" placeholder="Opção 1" required />
+          <input type="text" id="draftOption2" placeholder="Opção 2" required />
+          <input type="text" id="draftOption3" placeholder="Opção 3" required />
+          <input type="text" id="draftOption4" placeholder="Opção 4" required />
 
-          <input type="text" id="questionInput" placeholder="Pergunta" required />
-          <input type="text" id="option1" placeholder="Opção 1" required />
-          <input type="text" id="option2" placeholder="Opção 2" required />
-          <input type="text" id="option3" placeholder="Opção 3" required />
-          <input type="text" id="option4" placeholder="Opção 4" required />
-
-          <select id="correctAnswer" required>
+          <select id="draftCorrectAnswer" required>
             <option value="">Qual opção é a correta?</option>
             <option value="0">Opção 1</option>
             <option value="1">Opção 2</option>
@@ -70,14 +65,85 @@
             <option value="3">Opção 4</option>
           </select>
 
-          <button type="submit" class="success-btn">Salvar pergunta</button>
+          <div class="inline-actions">
+            <button type="submit" id="addDraftQuestionBtn" class="success-btn">Adicionar ao rascunho</button>
+            <button type="button" id="cancelDraftEditBtn" class="ghost-btn hidden">Cancelar edição</button>
+          </div>
         </form>
       </div>
     </section>
 
     <section class="admin-card glass">
-      <h3>Filmes cadastrados</h3>
+      <div class="section-head-row">
+        <div>
+          <span class="pill">Rascunho atual</span>
+          <h3>Perguntas adicionadas antes de salvar</h3>
+        </div>
+        <div class="draft-counter">Total: <strong id="draftCount">0</strong></div>
+      </div>
+
+      <div id="draftQuestionsList" class="question-admin-list empty-state">
+        <p>Nenhuma pergunta adicionada ao rascunho ainda.</p>
+      </div>
+
+      <div class="sticky-actions">
+        <button id="saveMovieWithQuestionsBtn" class="primary-btn">Salvar filme com perguntas</button>
+      </div>
+    </section>
+
+    <section class="admin-card glass">
+      <div class="section-head-row">
+        <div>
+          <span class="pill">Filmes cadastrados</span>
+          <h3>Gerenciar filmes já salvos</h3>
+        </div>
+      </div>
+
       <div id="adminMovieList" class="admin-movie-list"></div>
+    </section>
+
+    <section id="questionManagerSection" class="admin-card glass hidden">
+      <div class="section-head-row">
+        <div>
+          <span class="pill">Perguntas do filme</span>
+          <h3 id="questionManagerTitle">Gerenciar perguntas</h3>
+        </div>
+      </div>
+
+      <div id="existingQuestionsList" class="question-admin-list"></div>
+    </section>
+
+    <section id="existingEditSection" class="admin-card glass hidden">
+      <div class="section-head-row">
+        <div>
+          <span class="pill">Editar pergunta existente</span>
+          <h3>Atualizar pergunta salva</h3>
+        </div>
+      </div>
+
+      <form id="existingQuestionForm" class="form-grid">
+        <input type="hidden" id="existingQuestionMovieId" />
+        <input type="hidden" id="existingQuestionId" />
+
+        <input type="text" id="existingQuestionInput" placeholder="Pergunta" required />
+        <input type="text" id="existingOption1" placeholder="Opção 1" required />
+        <input type="text" id="existingOption2" placeholder="Opção 2" required />
+        <input type="text" id="existingOption3" placeholder="Opção 3" required />
+        <input type="text" id="existingOption4" placeholder="Opção 4" required />
+
+        <select id="existingCorrectAnswer" required>
+          <option value="">Qual opção é a correta?</option>
+          <option value="0">Opção 1</option>
+          <option value="1">Opção 2</option>
+          <option value="2">Opção 3</option>
+          <option value="3">Opção 4</option>
+        </select>
+
+        <div class="inline-actions">
+          <button type="submit" class="success-btn">Salvar alteração</button>
+          <button type="button" id="cancelExistingEditBtn" class="ghost-btn">Cancelar</button>
+        </div>
+      </form>
     </section>
   </main>
 

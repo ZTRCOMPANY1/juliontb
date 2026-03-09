@@ -16,7 +16,8 @@ import {
   query,
   orderBy,
   limit,
-  serverTimestamp
+  serverTimestamp,
+  runTransaction
 } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
 
 const authSection = document.getElementById('authSection');
@@ -119,18 +120,55 @@ function shuffleArray(array) {
   return arr;
 }
 
-async function ensureUsernameAvailable(username) {
-  const ref = doc(db, 'usernames', usernameKey(username));
-  const snap = await getDoc(ref);
-  return !snap.exists();
+async function registerUniqueUsername(username, userId) {
+  const key = usernameKey(username);
+  const usernameRef = doc(db, 'usernames', key);
+  const userRef = doc(db, 'users', userId);
+  const rankingRef = doc(db, 'ranking', userId);
+
+  await runTransaction(db, async (transaction) => {
+    const usernameSnap = await transaction.get(usernameRef);
+
+    if (usernameSnap.exists()) {
+      throw new Error('USERNAME_ALREADY_EXISTS');
+    }
+
+    transaction.set(usernameRef, {
+      username: normalizeUsername(username),
+      userId,
+      createdAt: serverTimestamp()
+    });
+
+    transaction.set(userRef, {
+      username: normalizeUsername(username),
+      usernameKey: key,
+      isAdmin: false,
+      createdAt: serverTimestamp()
+    });
+
+    transaction.set(rankingRef, {
+      username: normalizeUsername(username),
+      bestScore: 0,
+      updatedAt: serverTimestamp()
+    });
+  });
 }
 
-async function reserveUsername(username, userId) {
-  const ref = doc(db, 'usernames', usernameKey(username));
-  await setDoc(ref, {
-    username: normalizeUsername(username),
-    userId,
-    createdAt: serverTimestamp()
+async function saveBestScore() {
+  if (!currentUser) return;
+
+  const rankingRef = doc(db, 'ranking', currentUser.uid);
+
+  await runTransaction(db, async (transaction) => {
+    const rankingSnap = await transaction.get(rankingRef);
+    const currentBest = rankingSnap.exists() ? (rankingSnap.data().bestScore || 0) : 0;
+    const bestScore = score > currentBest ? score : currentBest;
+
+    transaction.set(rankingRef, {
+      username: currentUsername,
+      bestScore,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
   });
 }
 
@@ -266,8 +304,8 @@ async function loadRanking() {
 
   snapshot.docs.forEach((docItem, index) => {
     const data = docItem.data();
-
     let dateText = '-';
+
     if (data.updatedAt && data.updatedAt.toDate) {
       dateText = data.updatedAt.toDate().toLocaleString('pt-BR');
     }
@@ -382,11 +420,7 @@ nextQuestionBtn.addEventListener('click', () => {
 });
 
 finishQuizBtn.addEventListener('click', async () => {
-  await setDoc(doc(db, 'ranking', currentUser.uid), {
-    username: currentUsername,
-    bestScore: score,
-    updatedAt: serverTimestamp()
-  }, { merge: true });
+  await saveBestScore();
 
   const totalPoints = currentQuiz.length * 10;
   resultTitle.textContent = `${currentMovie.title} concluído!`;
@@ -425,38 +459,22 @@ registerForm.addEventListener('submit', async (event) => {
   }
 
   try {
-    const available = await ensureUsernameAvailable(username);
-
-    if (!available) {
-      showToast('Esse nome de usuário já existe.');
-      return;
-    }
-
     const credential = await createUserWithEmailAndPassword(
       auth,
       pseudoEmailFromUsername(username),
       password
     );
 
-    await reserveUsername(username, credential.user.uid);
-
-    await setDoc(doc(db, 'users', credential.user.uid), {
-      username,
-      usernameKey: usernameKey(username),
-      isAdmin: false,
-      createdAt: serverTimestamp()
-    });
-
-    await setDoc(doc(db, 'ranking', credential.user.uid), {
-      username,
-      bestScore: 0,
-      updatedAt: serverTimestamp()
-    });
+    await registerUniqueUsername(username, credential.user.uid);
 
     showToast('Cadastro realizado com sucesso.');
     registerForm.reset();
   } catch (error) {
-    showToast('Erro no cadastro. Talvez a senha seja fraca ou houve conflito no cadastro.');
+    if (error.message === 'USERNAME_ALREADY_EXISTS') {
+      showToast('Esse nome de usuário já existe.');
+    } else {
+      showToast('Erro no cadastro. Talvez a senha seja fraca ou o nome já esteja em uso.');
+    }
     console.error(error);
   }
 });

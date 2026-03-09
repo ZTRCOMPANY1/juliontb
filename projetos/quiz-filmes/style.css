@@ -207,6 +207,10 @@ body.app-body {
   gap: 20px;
 }
 
+.admin-grid-creation {
+  margin-bottom: 20px;
+}
+
 .form-grid {
   display: grid;
   gap: 12px;
@@ -425,6 +429,34 @@ button:hover,
   margin-bottom: 18px;
 }
 
+.section-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.inline-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sticky-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.draft-counter {
+  color: var(--muted);
+  font-weight: 700;
+}
+
 .ranking-card table {
   width: 100%;
   border-collapse: collapse;
@@ -445,22 +477,47 @@ button:hover,
   color: var(--muted);
 }
 
-.admin-movie-list {
+.admin-movie-list,
+.question-admin-list {
   display: grid;
   gap: 12px;
 }
 
-.admin-movie-item {
+.admin-movie-item,
+.question-admin-item {
   padding: 16px;
   border-radius: 16px;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
 }
 
-.admin-movie-item strong {
+.admin-movie-item strong,
+.question-admin-item strong {
   display: block;
   font-size: 18px;
   margin-bottom: 6px;
+}
+
+.admin-movie-item p,
+.question-admin-item p,
+.question-admin-item li,
+.admin-movie-item span {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.question-admin-item ol {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+
+.correct-label {
+  color: #bdf8e0;
+  font-weight: 800;
+}
+
+.empty-state {
+  color: var(--muted);
 }
 
 .toast {
