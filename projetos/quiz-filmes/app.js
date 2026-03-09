@@ -216,7 +216,7 @@ async function ensureSeeded() {
     ['Como se chama a hacker genial amiga dos irmãos?', ['Claire', 'Charlie', 'Jody', 'Donna'], 1],
     ['Qual personagem é xerife e aliada dos Winchesters?', ['Jody Mills', 'Bela Talbot', 'Meg', 'Jo Harvelle'], 0],
     ['Quem é o arcanjo irmão de Lucifer que possui Dean em outra linha?', ['Raphael', 'Michael', 'Gabriel', 'Uriel'], 1],
-    ['Qual personagem fingiu ser o Trickster antes de revelar ser arcanjo?', ['Michael', 'Lucifer', 'Gabriel', 'Metatron'], 2],
+    ['Qual personagem fingiu ser o Trickster ante de revelar ser arcanjo?', ['Michael', 'Lucifer', 'Gabriel', 'Metatron'], 2],
     ['Como se chama o bunker legado aos Homens de Letras?', ['Men of Archives', 'Men of Letters Bunker', 'Hunter House', 'Legacy Vault'], 1],
     ['Quem encontra a tábua demoníaca?', ['Kevin Tran', 'Chuck', 'Donatello', 'Bobby'], 0],
     ['Qual profeta traduz as tábuas?', ['Gabriel', 'Kevin Tran', 'Samandriel', 'Garth'], 1],
