@@ -64,6 +64,7 @@ let currentMovie = null;
 let currentIndex = 0;
 let score = 0;
 let answered = false;
+let isRegisteringUser = false;
 
 function showToast(message) {
   toast.textContent = message;
@@ -120,6 +121,24 @@ function shuffleArray(array) {
   return arr;
 }
 
+function delay(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+async function waitForUserDoc(userId, attempts = 12, interval = 250) {
+  for (let i = 0; i < attempts; i += 1) {
+    const snap = await getDoc(doc(db, 'users', userId));
+    if (snap.exists()) {
+      return snap;
+    }
+    await delay(interval);
+  }
+
+  return null;
+}
+
 async function registerUniqueUsername(username, userId) {
   const key = usernameKey(username);
   const usernameRef = doc(db, 'usernames', key);
@@ -151,6 +170,7 @@ async function registerUniqueUsername(username, userId) {
     transaction.set(rankingRef, {
       username: normalizeUsername(username),
       bestScore: 0,
+      hidden: false,
       updatedAt: serverTimestamp()
     });
   });
@@ -169,6 +189,7 @@ async function saveBestScore() {
     transaction.set(rankingRef, {
       username: currentUsername,
       bestScore,
+      hidden: false,
       updatedAt: serverTimestamp()
     }, { merge: true });
   });
@@ -306,6 +327,9 @@ async function loadRanking() {
 
   snapshot.docs.forEach((docItem, index) => {
     const data = docItem.data();
+
+    if (data.hidden === true) return;
+
     let dateText = '-';
 
     if (data.updatedAt && data.updatedAt.toDate) {
@@ -321,6 +345,10 @@ async function loadRanking() {
     `;
     rankingTableBody.appendChild(tr);
   });
+
+  if (!rankingTableBody.innerHTML.trim()) {
+    rankingTableBody.innerHTML = '<tr><td colspan="4">Ainda não há pontuações visíveis.</td></tr>';
+  }
 }
 
 async function startQuiz(movieId) {
@@ -460,6 +488,8 @@ registerForm.addEventListener('submit', async (event) => {
     return;
   }
 
+  isRegisteringUser = true;
+
   try {
     const credential = await createUserWithEmailAndPassword(
       auth,
@@ -474,10 +504,15 @@ registerForm.addEventListener('submit', async (event) => {
   } catch (error) {
     if (error.message === 'USERNAME_ALREADY_EXISTS') {
       showToast('Esse nome de usuário já existe.');
+      if (auth.currentUser) {
+        await signOut(auth);
+      }
     } else {
       showToast('Erro no cadastro. Talvez a senha seja fraca ou o nome já esteja em uso.');
     }
     console.error(error);
+  } finally {
+    isRegisteringUser = false;
   }
 });
 
@@ -518,9 +553,15 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  const userSnap = await getDoc(doc(db, 'users', user.uid));
+  let userSnap = null;
 
-  if (!userSnap.exists()) {
+  if (isRegisteringUser) {
+    userSnap = await waitForUserDoc(user.uid, 20, 250);
+  } else {
+    userSnap = await getDoc(doc(db, 'users', user.uid));
+  }
+
+  if (!userSnap || !userSnap.exists()) {
     await signOut(auth);
     showToast('Sua conta não está mais disponível no sistema.');
     openPanel(authSection);

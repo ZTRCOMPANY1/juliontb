@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nossa Netflix do Amor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">LOVEFLIX</div>
+    <nav class="nav">
+      <a href="index.html" class="active">Início</a>
+      <a href="historia.html">Nossa História</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-badge">Série Original do Nosso Amor</span>
+        <h1 id="heroTitle">Nossa História</h1>
+        <p id="heroDescription">
+          Uma jornada cheia de momentos especiais, fotos inesquecíveis e lembranças
+          que marcaram nossa vida juntos.
+        </p>
+        <div class="hero-buttons">
+          <a href="historia.html" class="btn btn-primary">Ver história</a>
+          <a href="#linhaDoTempo" class="btn btn-secondary">Explorar momentos</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="linhaDoTempo">
+      <div class="section-header">
+        <h2>Momentos especiais</h2>
+      </div>
+
+      <div class="carousel-wrapper">
+        <button class="carousel-btn left" data-target="carouselMomentos">&#10094;</button>
+
+        <div class="carousel" id="carouselMomentos"></div>
+
+        <button class="carousel-btn right" data-target="carouselMomentos">&#10095;</button>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="section-header">
+        <h2>Vídeos marcantes</h2>
+      </div>
+
+      <div class="carousel-wrapper">
+        <button class="carousel-btn left" data-target="carouselVideos">&#10094;</button>
+
+        <div class="carousel" id="carouselVideos"></div>
+
+        <button class="carousel-btn right" data-target="carouselVideos">&#10095;</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
