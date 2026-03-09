@@ -1,47 +1,84 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LOVEFLIX</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <audio id="bgMusic" loop>
+    <source src="assets/audio/music.mp3" type="audio/mpeg">
+  </audio>
+
   <header class="topbar">
     <div class="topbar-left">
-      <a href="index.html" class="brand">LOVEFLIX</a>
+      <a class="brand" href="index.html">LOVEFLIX</a>
       <nav class="nav">
         <a href="index.html" class="active">Início</a>
         <a href="historia.html">Nossa História</a>
       </nav>
     </div>
+
     <div class="topbar-right">
+      <button id="musicToggle" class="icon-btn">♪</button>
+      <button id="surpriseBtn" class="surprise-btn">Surpresa</button>
       <button id="logoutBtn" class="logout-btn">Sair</button>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-overlay"></div>
+  <section class="hero hero-netflix">
+    <div class="hero-shade"></div>
+
     <div class="hero-content">
-      <p class="hero-tag">Série exclusiva</p>
+      <p class="hero-kicker">Série romântica exclusiva</p>
       <h1>Nossa História</h1>
-      <p class="hero-text">
-        Uma história feita de momentos, memórias, fotos, vídeos e muito amor.
-        Cada capítulo guarda um pedacinho da nossa caminhada juntos.
+      <p class="hero-description">
+        Uma coleção dos nossos melhores capítulos, memórias, fotos e vídeos.
+        Cada momento aqui é uma parte do que construímos juntos.
       </p>
-      <div class="hero-buttons">
-        <a href="historia.html" class="btn btn-primary">Ver nossa história</a>
-        <a href="#linha-do-tempo" class="btn btn-secondary">Explorar momentos</a>
+
+      <div class="hero-actions">
+        <a href="historia.html" class="btn btn-light">Assistir agora</a>
+        <a href="#secoes" class="btn btn-dark">Mais informações</a>
+      </div>
+
+      <div class="counter-box">
+        <h3>Tempo juntos</h3>
+        <div id="relationshipCounter" class="relationship-counter">
+          0 anos • 0 meses • 0 dias • 0 horas • 0 minutos • 0 segundos
+        </div>
       </div>
     </div>
   </section>
 
-  <main class="content">
-    <section class="row-section" id="linha-do-tempo">
-      <h2>Capítulos da nossa história</h2>
-      <div class="scroll-row" id="homeRow"></div>
+  <main class="main-content" id="secoes">
+    <section class="season-section">
+      <div class="section-head">
+        <h2>Temporadas da relação</h2>
+      </div>
+
+      <div class="season-grid" id="seasonGrid"></div>
+    </section>
+
+    <section class="row-section">
+      <div class="section-head">
+        <h2>Continue assistindo nossa história</h2>
+      </div>
+      <div class="netflix-row" id="homeRow"></div>
     </section>
   </main>
+
+  <div id="surpriseModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeSurprise">×</button>
+      <h2>Surpresa 💖</h2>
+      <p>
+        Não importa quantos capítulos ainda venham...
+        o meu favorito sempre vai ser viver todos eles com você.
+      </p>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

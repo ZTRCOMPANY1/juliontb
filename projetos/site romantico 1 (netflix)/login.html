@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | Nossa História</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar | LOVEFLIX</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="login-body">
-  <div class="login-overlay"></div>
+  <div class="login-backdrop"></div>
 
-  <main class="login-container">
-    <div class="login-box">
-      <h1 class="logo-text">LOVEFLIX</h1>
-      <h2>Entrar</h2>
-      <p class="login-desc">Digite a nossa data de namoro para acessar</p>
+  <main class="login-wrap">
+    <section class="login-panel">
+      <div class="login-logo">LOVEFLIX</div>
+      <h1>Entrar</h1>
+      <p class="login-subtitle">Digite a data do nosso namoro para continuar</p>
 
       <form id="loginForm" class="login-form">
-        <input type="date" id="dateInput" required />
-        <button type="submit">Entrar</button>
+        <input type="date" id="dateInput" required>
+        <button type="submit">Continuar</button>
         <p id="loginError" class="error-msg"></p>
       </form>
-    </div>
+    </section>
   </main>
 
   <script src="app.js"></script>

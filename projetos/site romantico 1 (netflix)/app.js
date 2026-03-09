@@ -1,13 +1,11 @@
 /* =========================
-   CONFIGURAÇÃO PRINCIPAL
+   CONFIG
 ========================= */
 
-// COLOQUE AQUI A DATA DO NAMORO
-// formato: ANO-MES-DIA
 var DATA_NAMORO = "2024-06-12";
 
 /* =========================
-   DADOS DO SITE
+   DADOS
 ========================= */
 
 var fotos = [
@@ -16,40 +14,50 @@ var fotos = [
     tipo: "foto",
     titulo: "O começo de tudo",
     data: "2024-06-12",
-    descricao: "Esse foi um dos momentos mais especiais, porque marcou o início da nossa história. Um dia simples, mas que mudou tudo para nós.",
-    imagem: "assets/fotos/foto1.jpg"
+    descricao: "Esse foi o capítulo onde tudo começou. Um momento que marcou para sempre a nossa história.",
+    imagem: "assets/fotos/foto1.jpg",
+    preview: "assets/videos/trailer1.mp4",
+    temporada: "Temporada 1"
   },
   {
     id: 2,
     tipo: "foto",
     titulo: "Nosso primeiro passeio",
     data: "2024-06-20",
-    descricao: "Cada detalhe desse dia ficou guardado no coração. Foi um daqueles momentos em que a felicidade parecia caber inteira dentro de uma foto.",
-    imagem: "assets/fotos/foto2.jpg"
+    descricao: "Um daqueles dias que parecem simples, mas viram lembranças gigantes no coração.",
+    imagem: "assets/fotos/foto2.jpg",
+    preview: "assets/videos/trailer2.mp4",
+    temporada: "Temporada 1"
   },
   {
     id: 3,
     tipo: "foto",
-    titulo: "Sorrisos que ficaram",
+    titulo: "Sorrisos juntos",
     data: "2024-07-05",
-    descricao: "Essa foto representa a leveza que existe quando estamos juntos. Um momento que sempre vai trazer lembranças boas.",
-    imagem: "assets/fotos/foto3.jpg"
+    descricao: "Essa foto guarda uma energia linda. Ela sempre vai lembrar a felicidade que a gente sentiu.",
+    imagem: "assets/fotos/foto3.jpg",
+    preview: "assets/videos/trailer1.mp4",
+    temporada: "Temporada 2"
   },
   {
     id: 4,
     tipo: "foto",
-    titulo: "Mais um capítulo lindo",
+    titulo: "Momento especial",
     data: "2024-08-10",
-    descricao: "Aqui já dava para ver o quanto nossa história estava crescendo e ficando cada vez mais especial.",
-    imagem: "assets/fotos/foto4.jpg"
+    descricao: "Cada fase da nossa história teve sua beleza, e essa foto representa muito bem uma delas.",
+    imagem: "assets/fotos/foto4.jpg",
+    preview: "assets/videos/trailer2.mp4",
+    temporada: "Temporada 2"
   },
   {
     id: 5,
     tipo: "foto",
-    titulo: "Memória inesquecível",
+    titulo: "Uma memória eterna",
     data: "2024-09-02",
-    descricao: "Uma imagem que guarda sentimento, carinho e tudo que a gente construiu até aqui.",
-    imagem: "assets/fotos/foto5.jpg"
+    descricao: "Tem fotos que não são só imagens. Elas viram abrigo de sentimento.",
+    imagem: "assets/fotos/foto5.jpg",
+    preview: "assets/videos/trailer1.mp4",
+    temporada: "Temporada 3"
   }
 ];
 
@@ -59,25 +67,50 @@ var videos = [
     tipo: "video",
     titulo: "Nosso vídeo especial",
     data: "2024-09-15",
-    descricao: "Um vídeo para reviver um momento marcante da nossa história. Toda vez que assistimos, parece que sentimos tudo de novo.",
+    descricao: "Um vídeo para reviver sentimentos, olhares e um momento muito especial da nossa caminhada.",
     video: "assets/videos/video1.mp4",
-    thumb: "assets/thumbs/video1.jpg"
+    thumb: "assets/thumbs/video1.jpg",
+    temporada: "Temporada 3"
   },
   {
     id: 2,
     tipo: "video",
-    titulo: "Um dia para lembrar",
+    titulo: "Um dia inesquecível",
     data: "2024-10-01",
-    descricao: "Esse vídeo guarda um instante único. Uma lembrança viva do quanto nossa caminhada é bonita.",
+    descricao: "Esse vídeo guarda um instante único. Toda vez que ele toca, parece que a gente volta no tempo.",
     video: "assets/videos/video2.mp4",
-    thumb: "assets/thumbs/video2.jpg"
+    thumb: "assets/thumbs/video2.jpg",
+    temporada: "Temporada 4"
+  }
+];
+
+var temporadas = [
+  {
+    nome: "Temporada 1",
+    subtitulo: "O início",
+    descricao: "Os primeiros capítulos, as primeiras conversas e os primeiros momentos que mudaram tudo."
+  },
+  {
+    nome: "Temporada 2",
+    subtitulo: "Conexão",
+    descricao: "A fase em que cada encontro foi ficando mais especial e cada memória mais forte."
+  },
+  {
+    nome: "Temporada 3",
+    subtitulo: "Memórias marcantes",
+    descricao: "Momentos que já viraram lembranças eternas e que sempre vão ter um espaço no coração."
+  },
+  {
+    nome: "Temporada 4",
+    subtitulo: "Nossa continuação",
+    descricao: "Porque a nossa série favorita ainda está em andamento, com capítulos cada vez mais lindos."
   }
 ];
 
 var todosOsItens = fotos.concat(videos);
 
 /* =========================
-   FUNÇÕES GERAIS
+   GERAL
 ========================= */
 
 function estaLogado() {
@@ -87,41 +120,46 @@ function estaLogado() {
 function protegerPaginas() {
   var paginaAtual = window.location.pathname.split("/").pop();
 
-  if (paginaAtual === "" || paginaAtual === "/") {
+  if (!paginaAtual) {
     paginaAtual = "login.html";
   }
 
-  var paginasProtegidas = ["index.html", "historia.html", "detalhe.html", "video.html"];
+  var protegidas = ["profiles.html", "index.html", "historia.html", "detalhe.html", "video.html"];
 
-  if (paginasProtegidas.indexOf(paginaAtual) !== -1 && !estaLogado()) {
+  if (protegidas.indexOf(paginaAtual) !== -1 && !estaLogado()) {
     window.location.href = "login.html";
   }
 
   if (paginaAtual === "login.html" && estaLogado()) {
-    window.location.href = "index.html";
+    window.location.href = "profiles.html";
   }
 }
 
 function configurarLogout() {
-  var logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", function () {
-      localStorage.removeItem("loveflixAuth");
-      window.location.href = "login.html";
-    });
-  }
+  var btn = document.getElementById("logoutBtn");
+  if (!btn) return;
+
+  btn.addEventListener("click", function () {
+    localStorage.removeItem("loveflixAuth");
+    localStorage.removeItem("loveflixProfile");
+    window.location.href = "login.html";
+  });
 }
 
-function formatarData(dataString) {
-  var partes = dataString.split("-");
-  if (partes.length !== 3) return dataString;
-
-  return partes[2] + "/" + partes[1] + "/" + partes[0];
+function formatarData(data) {
+  var p = data.split("-");
+  if (p.length !== 3) return data;
+  return p[2] + "/" + p[1] + "/" + p[0];
 }
 
 function getParam(nome) {
   var params = new URLSearchParams(window.location.search);
   return params.get(nome);
+}
+
+function textoCurto(texto, max) {
+  if (texto.length <= max) return texto;
+  return texto.slice(0, max) + "...";
 }
 
 /* =========================
@@ -134,33 +172,187 @@ function iniciarLogin() {
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-
-    var dateInput = document.getElementById("dateInput");
-    var loginError = document.getElementById("loginError");
-    var valor = dateInput.value;
+    var valor = document.getElementById("dateInput").value;
+    var erro = document.getElementById("loginError");
 
     if (valor === DATA_NAMORO) {
       localStorage.setItem("loveflixAuth", "true");
-      window.location.href = "index.html";
+      window.location.href = "profiles.html";
     } else {
-      loginError.textContent = "Data incorreta. Tente novamente.";
+      erro.textContent = "Data incorreta. Tente novamente.";
     }
   });
 }
 
 /* =========================
-   CARDS
+   PERFIS
+========================= */
+
+function iniciarPerfis() {
+  var cards = document.querySelectorAll(".profile-card");
+  if (!cards.length) return;
+
+  cards.forEach(function(card) {
+    card.addEventListener("click", function() {
+      var perfil = card.getAttribute("data-profile");
+      localStorage.setItem("loveflixProfile", perfil);
+      window.location.href = "index.html";
+    });
+  });
+}
+
+/* =========================
+   MÚSICA
+========================= */
+
+function iniciarMusica() {
+  var audio = document.getElementById("bgMusic");
+  var btn = document.getElementById("musicToggle");
+
+  if (!audio || !btn) return;
+
+  var tocando = localStorage.getItem("loveflixMusic") === "on";
+
+  function atualizarBotao() {
+    btn.textContent = tocando ? "♫" : "♪";
+  }
+
+  atualizarBotao();
+
+  if (tocando) {
+    audio.volume = 0.35;
+    audio.play().catch(function() {});
+  }
+
+  btn.addEventListener("click", function () {
+    tocando = !tocando;
+    localStorage.setItem("loveflixMusic", tocando ? "on" : "off");
+    atualizarBotao();
+
+    if (tocando) {
+      audio.volume = 0.35;
+      audio.play().catch(function() {});
+    } else {
+      audio.pause();
+    }
+  });
+}
+
+/* =========================
+   CONTADOR
+========================= */
+
+function atualizarContador() {
+  var el = document.getElementById("relationshipCounter");
+  if (!el) return;
+
+  var inicio = new Date(DATA_NAMORO + "T00:00:00");
+
+  function render() {
+    var agora = new Date();
+    var diff = agora - inicio;
+
+    if (diff < 0) {
+      el.textContent = "Ainda não começou";
+      return;
+    }
+
+    var segundos = Math.floor(diff / 1000);
+    var minutos = Math.floor(segundos / 60);
+    var horas = Math.floor(minutos / 60);
+    var diasTotal = Math.floor(horas / 24);
+
+    var anos = Math.floor(diasTotal / 365);
+    var meses = Math.floor((diasTotal % 365) / 30);
+    var dias = Math.floor((diasTotal % 365) % 30);
+    var h = horas % 24;
+    var m = minutos % 60;
+    var s = segundos % 60;
+
+    el.textContent =
+      anos + " anos • " +
+      meses + " meses • " +
+      dias + " dias • " +
+      h + " horas • " +
+      m + " minutos • " +
+      s + " segundos";
+  }
+
+  render();
+  setInterval(render, 1000);
+}
+
+/* =========================
+   SURPRESA
+========================= */
+
+function iniciarSurpresa() {
+  var btn = document.getElementById("surpriseBtn");
+  var modal = document.getElementById("surpriseModal");
+  var close = document.getElementById("closeSurprise");
+
+  if (!btn || !modal || !close) return;
+
+  btn.addEventListener("click", function () {
+    modal.classList.add("open");
+  });
+
+  close.addEventListener("click", function () {
+    modal.classList.remove("open");
+  });
+
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) {
+      modal.classList.remove("open");
+    }
+  });
+}
+
+/* =========================
+   TEMPORADAS
+========================= */
+
+function renderTemporadas() {
+  var grid = document.getElementById("seasonGrid");
+  if (!grid) return;
+
+  var html = "";
+
+  for (var i = 0; i < temporadas.length; i++) {
+    html +=
+      '<div class="season-card">' +
+        '<span>' + temporadas[i].nome + '</span>' +
+        '<h3>' + temporadas[i].subtitulo + '</h3>' +
+        '<p>' + temporadas[i].descricao + '</p>' +
+      '</div>';
+  }
+
+  grid.innerHTML = html;
+}
+
+/* =========================
+   CARDS ESTILO NETFLIX
 ========================= */
 
 function criarCardFoto(item) {
   return (
-    '<a class="card-item" href="detalhe.html?id=' + item.id + '">' +
-      '<div class="card-thumb">' +
-        '<img src="' + item.imagem + '" alt="' + item.titulo + '">' +
-      '</div>' +
-      '<div class="card-info">' +
-        '<div class="card-title">' + item.titulo + '</div>' +
-        '<div class="card-date">' + formatarData(item.data) + '</div>' +
+    '<a class="netflix-card" href="detalhe.html?id=' + item.id + '">' +
+      '<div class="netflix-card-inner">' +
+        '<div class="card-media">' +
+          '<img class="preview-image-hidden" src="' + item.imagem + '" alt="' + item.titulo + '">' +
+          '<video class="preview-video" muted loop playsinline preload="metadata">' +
+            '<source src="' + item.preview + '" type="video/mp4">' +
+          '</video>' +
+          '<div class="card-gradient"></div>' +
+        '</div>' +
+        '<div class="card-bottom">' +
+          '<div class="card-meta">' +
+            '<span class="card-pill">Foto</span>' +
+            '<span>' + formatarData(item.data) + '</span>' +
+          '</div>' +
+          '<div class="card-title">' + item.titulo + '</div>' +
+          '<div class="card-desc">' + textoCurto(item.descricao, 90) + '</div>' +
+        '</div>' +
       '</div>' +
     '</a>'
   );
@@ -168,30 +360,42 @@ function criarCardFoto(item) {
 
 function criarCardVideo(item) {
   return (
-    '<a class="card-item" href="video.html?id=' + item.id + '">' +
-      '<div class="card-thumb video-thumb">' +
-        '<img src="' + item.thumb + '" alt="' + item.titulo + '">' +
-        '<div class="play-badge">▶</div>' +
-      '</div>' +
-      '<div class="card-info">' +
-        '<div class="card-title">' + item.titulo + '</div>' +
-        '<div class="card-date">' + formatarData(item.data) + '</div>' +
+    '<a class="netflix-card" href="video.html?id=' + item.id + '">' +
+      '<div class="netflix-card-inner">' +
+        '<div class="card-media">' +
+          '<img class="preview-image-hidden" src="' + item.thumb + '" alt="' + item.titulo + '">' +
+          '<video class="preview-video" muted loop playsinline preload="metadata">' +
+            '<source src="' + item.video + '" type="video/mp4">' +
+          '</video>' +
+          '<div class="card-gradient"></div>' +
+          '<div class="card-play-icon">▶</div>' +
+        '</div>' +
+        '<div class="card-bottom">' +
+          '<div class="card-meta">' +
+            '<span class="card-pill">Vídeo</span>' +
+            '<span>' + formatarData(item.data) + '</span>' +
+          '</div>' +
+          '<div class="card-title">' + item.titulo + '</div>' +
+          '<div class="card-desc">' + textoCurto(item.descricao, 90) + '</div>' +
+        '</div>' +
       '</div>' +
     '</a>'
   );
 }
 
 function renderHomeRow() {
-  var homeRow = document.getElementById("homeRow");
-  if (!homeRow) return;
+  var row = document.getElementById("homeRow");
+  if (!row) return;
 
   var html = "";
   for (var i = 0; i < todosOsItens.length; i++) {
-    var item = todosOsItens[i];
-    html += item.tipo === "foto" ? criarCardFoto(item) : criarCardVideo(item);
+    html += todosOsItens[i].tipo === "foto"
+      ? criarCardFoto(todosOsItens[i])
+      : criarCardVideo(todosOsItens[i]);
   }
 
-  homeRow.innerHTML = html;
+  row.innerHTML = html;
+  iniciarPreviewHover();
 }
 
 function renderHistoriaRows() {
@@ -213,10 +417,32 @@ function renderHistoriaRows() {
     }
     videoRow.innerHTML = htmlVideos;
   }
+
+  iniciarPreviewHover();
+}
+
+function iniciarPreviewHover() {
+  var cards = document.querySelectorAll(".netflix-card");
+
+  cards.forEach(function(card) {
+    var video = card.querySelector(".preview-video");
+
+    if (!video) return;
+
+    card.addEventListener("mouseenter", function() {
+      video.currentTime = 0;
+      video.play().catch(function() {});
+    });
+
+    card.addEventListener("mouseleave", function() {
+      video.pause();
+      video.currentTime = 0;
+    });
+  });
 }
 
 /* =========================
-   DETALHE FOTO
+   DETALHES
 ========================= */
 
 function renderDetalheFoto() {
@@ -237,7 +463,6 @@ function renderDetalheFoto() {
     container.innerHTML =
       '<div class="not-found">' +
         '<h2>Foto não encontrada</h2>' +
-        '<p>Esse capítulo não existe ou foi removido.</p>' +
         '<a class="back-link" href="historia.html">Voltar</a>' +
       '</div>';
     return;
@@ -249,7 +474,7 @@ function renderDetalheFoto() {
         '<img src="' + item.imagem + '" alt="' + item.titulo + '">' +
       '</div>' +
       '<div class="detail-info">' +
-        '<span class="detail-label">Foto especial</span>' +
+        '<span class="detail-badge">Foto especial</span>' +
         '<h1>' + item.titulo + '</h1>' +
         '<div class="detail-date">Data: ' + formatarData(item.data) + '</div>' +
         '<div class="detail-description">' + item.descricao + '</div>' +
@@ -257,10 +482,6 @@ function renderDetalheFoto() {
       '</div>' +
     '</div>';
 }
-
-/* =========================
-   DETALHE VÍDEO
-========================= */
 
 function renderDetalheVideo() {
   var container = document.getElementById("videoContainer");
@@ -280,7 +501,6 @@ function renderDetalheVideo() {
     container.innerHTML =
       '<div class="not-found">' +
         '<h2>Vídeo não encontrado</h2>' +
-        '<p>Esse capítulo não existe ou foi removido.</p>' +
         '<a class="back-link" href="historia.html">Voltar</a>' +
       '</div>';
     return;
@@ -295,7 +515,7 @@ function renderDetalheVideo() {
         '</video>' +
       '</div>' +
       '<div class="detail-info">' +
-        '<span class="detail-label">Vídeo especial</span>' +
+        '<span class="detail-badge">Vídeo especial</span>' +
         '<h1>' + item.titulo + '</h1>' +
         '<div class="detail-date">Data: ' + formatarData(item.data) + '</div>' +
         '<div class="detail-description">' + item.descricao + '</div>' +
@@ -305,13 +525,18 @@ function renderDetalheVideo() {
 }
 
 /* =========================
-   INICIALIZAÇÃO
+   START
 ========================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   protegerPaginas();
   iniciarLogin();
+  iniciarPerfis();
   configurarLogout();
+  iniciarMusica();
+  atualizarContador();
+  iniciarSurpresa();
+  renderTemporadas();
   renderHomeRow();
   renderHistoriaRows();
   renderDetalheFoto();

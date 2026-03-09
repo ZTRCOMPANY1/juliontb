@@ -1,38 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nossa História</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nossa História | LOVEFLIX</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <audio id="bgMusic" loop>
+    <source src="assets/audio/music.mp3" type="audio/mpeg">
+  </audio>
+
   <header class="topbar">
-    <div class="logo">LOVEFLIX</div>
-    <nav class="nav">
-      <a href="index.html">Início</a>
-      <a href="historia.html" class="active">Nossa História</a>
-    </nav>
+    <div class="topbar-left">
+      <a class="brand" href="index.html">LOVEFLIX</a>
+      <nav class="nav">
+        <a href="index.html">Início</a>
+        <a href="historia.html" class="active">Nossa História</a>
+      </nav>
+    </div>
+
+    <div class="topbar-right">
+      <button id="musicToggle" class="icon-btn">♪</button>
+      <button id="surpriseBtn" class="surprise-btn">Surpresa</button>
+      <button id="logoutBtn" class="logout-btn">Sair</button>
+    </div>
   </header>
 
-  <main class="page-main">
-    <section class="page-banner">
-      <div class="page-banner-overlay"></div>
-      <div class="page-banner-content">
-        <h1>Nossa História</h1>
-        <p>
-          Cada foto representa um capítulo da nossa jornada. Clique em um momento
-          para ver a data, descrição e todos os detalhes.
-        </p>
+  <section class="page-hero">
+    <div class="hero-shade"></div>
+    <div class="page-hero-content">
+      <h1>Nossa História</h1>
+      <p>
+        Aqui estão os capítulos da nossa jornada. Passe o mouse nos cards para ver o preview.
+      </p>
+    </div>
+  </section>
+
+  <main class="main-content">
+    <section class="row-section">
+      <div class="section-head">
+        <h2>Fotos</h2>
       </div>
+      <div class="netflix-row" id="photoRow"></div>
     </section>
 
-    <section class="history-grid-section">
-      <div class="history-grid" id="historyGrid"></div>
+    <section class="row-section">
+      <div class="section-head">
+        <h2>Vídeos</h2>
+      </div>
+      <div class="netflix-row" id="videoRow"></div>
     </section>
   </main>
 
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+  <div id="surpriseModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeSurprise">×</button>
+      <h2>Surpresa 💖</h2>
+      <p>
+        Você é a parte mais linda de toda essa história.
+      </p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
