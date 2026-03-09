@@ -33,6 +33,7 @@ const addDraftQuestionBtn = document.getElementById('addDraftQuestionBtn');
 const cancelDraftEditBtn = document.getElementById('cancelDraftEditBtn');
 const draftQuestionsList = document.getElementById('draftQuestionsList');
 const draftCount = document.getElementById('draftCount');
+const txtImportInput = document.getElementById('txtImportInput');
 
 const adminMovieList = document.getElementById('adminMovieList');
 
@@ -86,6 +87,7 @@ function resetMovieDraft() {
   editingDraftIndex = -1;
   renderDraftQuestions();
   resetDraftQuestionForm();
+  if (txtImportInput) txtImportInput.value = '';
 }
 
 function renderDraftQuestions() {
@@ -166,6 +168,66 @@ function removeDraftQuestion(index) {
   }
 
   showToast('Pergunta removida do rascunho.');
+}
+
+function parseCorrectAnswer(value) {
+  const normalized = value.trim().toUpperCase();
+
+  if (normalized === 'A' || normalized === '1') return 0;
+  if (normalized === 'B' || normalized === '2') return 1;
+  if (normalized === 'C' || normalized === '3') return 2;
+  if (normalized === 'D' || normalized === '4') return 3;
+
+  return -1;
+}
+
+function parseTxtQuestions(content) {
+  const blocks = content
+    .split(/\n\s*\n/g)
+    .map((block) => block.trim())
+    .filter(Boolean);
+
+  const parsed = [];
+
+  for (const block of blocks) {
+    const lines = block
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    let question = '';
+    const options = ['', '', '', ''];
+    let correctIndex = -1;
+
+    for (const line of lines) {
+      if (/^Pergunta\s*:/i.test(line)) {
+        question = line.replace(/^Pergunta\s*:/i, '').trim();
+      } else if (/^A[\)\.\-\:]/i.test(line)) {
+        options[0] = line.replace(/^A[\)\.\-\:]\s*/i, '').trim();
+      } else if (/^B[\)\.\-\:]/i.test(line)) {
+        options[1] = line.replace(/^B[\)\.\-\:]\s*/i, '').trim();
+      } else if (/^C[\)\.\-\:]/i.test(line)) {
+        options[2] = line.replace(/^C[\)\.\-\:]\s*/i, '').trim();
+      } else if (/^D[\)\.\-\:]/i.test(line)) {
+        options[3] = line.replace(/^D[\)\.\-\:]\s*/i, '').trim();
+      } else if (/^Resposta\s*:/i.test(line)) {
+        const value = line.replace(/^Resposta\s*:/i, '').trim();
+        correctIndex = parseCorrectAnswer(value);
+      }
+    }
+
+    if (!question || options.some((option) => !option) || correctIndex < 0) {
+      throw new Error('TXT_INVALID_FORMAT');
+    }
+
+    parsed.push({
+      question,
+      options,
+      correctIndex
+    });
+  }
+
+  return parsed;
 }
 
 async function loadMovies() {
@@ -295,18 +357,8 @@ async function openMovieQuestionManager(movieId, movieTitle) {
       <strong>${index + 1}. ${item.question}</strong>
       <ol>${optionsHtml}</ol>
       <div class="inline-actions" style="margin-top:12px;">
-        <button
-          class="ghost-btn edit-existing-btn"
-          data-movie-id="${movieId}"
-          data-id="${item.id}">
-          Editar
-        </button>
-        <button
-          class="danger-btn remove-existing-btn"
-          data-movie-id="${movieId}"
-          data-id="${item.id}">
-          Remover
-        </button>
+        <button class="ghost-btn edit-existing-btn">Editar</button>
+        <button class="danger-btn remove-existing-btn">Remover</button>
       </div>
     `;
 
@@ -406,6 +458,26 @@ draftQuestionForm.addEventListener('submit', (event) => {
 cancelDraftEditBtn.addEventListener('click', () => {
   resetDraftQuestionForm();
 });
+
+if (txtImportInput) {
+  txtImportInput.addEventListener('change', async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const imported = parseTxtQuestions(text);
+
+      draftQuestions.push(...imported);
+      renderDraftQuestions();
+      showToast(`${imported.length} pergunta(s) importada(s) para o rascunho.`);
+      txtImportInput.value = '';
+    } catch (error) {
+      showToast('Erro ao importar TXT. Verifique o formato do arquivo.');
+      console.error(error);
+    }
+  });
+}
 
 saveMovieWithQuestionsBtn.addEventListener('click', async () => {
   if (!currentIsAdmin) {
@@ -524,9 +596,10 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  currentIsAdmin = userSnap.data().isAdmin === true;
+  const userData = userSnap.data();
+  currentIsAdmin = userData.isAdmin === true;
 
-  if (!currentIsAdmin) {
+  if (!currentIsAdmin || userData.banned === true || userData.removed === true) {
     window.location.href = 'index.html';
     return;
   }

@@ -265,6 +265,13 @@ button:hover,
   transform: translateY(-1px);
 }
 
+button:disabled,
+.link-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .primary-btn {
   color: white;
   background: linear-gradient(135deg, var(--primary), #9982ff);
@@ -455,6 +462,26 @@ button:hover,
 .draft-counter {
   color: var(--muted);
   font-weight: 700;
+}
+
+.muted-text {
+  color: var(--muted);
+}
+
+.help-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.format-pre {
+  margin: 10px 0 0;
+  white-space: pre-wrap;
+  color: #dce6ff;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .ranking-card table {

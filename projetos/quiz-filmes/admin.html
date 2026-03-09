@@ -25,6 +25,7 @@
 
     <nav class="topbar-actions">
       <a href="index.html" class="ghost-btn link-btn">Voltar</a>
+      <a href="admin-users.html" class="ghost-btn link-btn">Usuários</a>
       <button id="logoutBtn" class="danger-btn">Sair</button>
     </nav>
   </header>
@@ -34,7 +35,7 @@
       <div class="hero-copy">
         <span class="pill">Área administrativa</span>
         <h2>Cadastre filme e perguntas tudo junto</h2>
-        <p>Você pode montar o filme inteiro em rascunho, ver as perguntas abaixo e só depois enviar tudo de uma vez.</p>
+        <p>Você pode montar o filme inteiro em rascunho, importar perguntas por TXT e só depois enviar tudo de uma vez.</p>
       </div>
     </section>
 
@@ -70,6 +71,36 @@
             <button type="button" id="cancelDraftEditBtn" class="ghost-btn hidden">Cancelar edição</button>
           </div>
         </form>
+      </div>
+    </section>
+
+    <section class="admin-card glass">
+      <div class="section-head-row">
+        <div>
+          <span class="pill">Importar por TXT</span>
+          <h3>Adicionar várias perguntas de uma vez</h3>
+          <p class="muted-text">O arquivo TXT vai ser lido e as perguntas entram no rascunho automaticamente.</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <input type="file" id="txtImportInput" accept=".txt" />
+        <div class="help-box">
+          <strong>Formato do TXT:</strong>
+<pre class="format-pre">Pergunta: Qual é o carro do Dean?
+A) Mustang
+B) Impala
+C) Camaro
+D) Charger
+Resposta: B
+
+Pergunta: Quem é o irmão mais velho?
+A) Sam
+B) Dean
+C) Adam
+D) John
+Resposta: B</pre>
+        </div>
       </div>
     </section>
 
