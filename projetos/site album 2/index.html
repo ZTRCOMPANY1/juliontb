@@ -251,9 +251,9 @@
         <textarea id="albumDescInput" placeholder="Descrição do álbum"></textarea>
       </div>
       <div id="mediaFields" class="hidden">
-        <input id="mediaFileInput" type="file" accept="image/*,video/*" />
+        <input id="mediaFileInput" type="file" accept="image/*,video/*" multiple />
         <div style="height:10px"></div>
-        <input id="mediaCaptionInput" type="text" placeholder="Legenda opcional" />
+        <input id="mediaCaptionInput" type="text" placeholder="Legenda opcional para todos os arquivos selecionados" />
       </div>
       <div style="height:16px"></div>
       <div class="actions">
@@ -666,44 +666,64 @@
     }
 
     async function uploadMedia() {
-      const file = mediaFileInput.files[0];
+      const files = Array.from(mediaFileInput.files || []);
       const caption = mediaCaptionInput.value.trim();
 
-      if (!file) {
-        formMsg.textContent = 'Escolha uma foto ou vídeo.';
+      if (!files.length) {
+        formMsg.textContent = 'Escolha uma ou mais fotos/vídeos.';
         return;
       }
 
-      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-      const path = `${currentUser.uid}/${currentAlbumId}/${Date.now()}-${safeName}`;
+      formMsg.textContent = `Enviando ${files.length} arquivo(s)...`;
 
-      formMsg.textContent = 'Enviando arquivo...';
-      const { error: uploadError } = await supabase.storage
-        .from(SUPABASE_BUCKET)
-        .upload(path, file, {
-          cacheControl: '3600',
-          upsert: false,
-          contentType: file.type
+      let uploadedCount = 0;
+      let firstUploadedUrl = '';
+      let firstUploadedType = '';
+
+      for (const file of files) {
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const path = `${currentUser.uid}/${currentAlbumId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${safeName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from(SUPABASE_BUCKET)
+          .upload(path, file, {
+            cacheControl: '3600',
+            upsert: false,
+            contentType: file.type
+          });
+
+        if (uploadError) {
+          console.error('Erro no upload do arquivo:', file.name, uploadError);
+          continue;
+        }
+
+        const { data: publicData } = supabase.storage.from(SUPABASE_BUCKET).getPublicUrl(path);
+
+        await addDoc(collection(db, 'albums', currentAlbumId, 'items'), {
+          filename: file.name,
+          caption,
+          size: file.size,
+          type: file.type,
+          path,
+          url: publicData.publicUrl,
+          uploadedByUid: currentUser.uid,
+          uploadedByEmail: currentUser.email,
+          createdAt: serverTimestamp()
         });
 
-      if (uploadError) {
-        formMsg.textContent = 'Erro no upload: ' + uploadError.message;
-        return;
+        if (!firstUploadedUrl) {
+          firstUploadedUrl = publicData.publicUrl;
+          firstUploadedType = file.type;
+        }
+
+        uploadedCount++;
+        formMsg.textContent = `Enviando ${uploadedCount} de ${files.length} arquivo(s)...`;
       }
 
-      const { data: publicData } = supabase.storage.from(SUPABASE_BUCKET).getPublicUrl(path);
-
-      await addDoc(collection(db, 'albums', currentAlbumId, 'items'), {
-        filename: file.name,
-        caption,
-        size: file.size,
-        type: file.type,
-        path,
-        url: publicData.publicUrl,
-        uploadedByUid: currentUser.uid,
-        uploadedByEmail: currentUser.email,
-        createdAt: serverTimestamp()
-      });
+      if (!uploadedCount) {
+        formMsg.textContent = 'Nenhum arquivo foi enviado com sucesso.';
+        return;
+      }
 
       const itemsSnap = await getDocs(collection(db, 'albums', currentAlbumId, 'items'));
       const count = itemsSnap.size;
@@ -714,10 +734,14 @@
 
       await updateDoc(albumRef, {
         itemCount: count,
-        coverUrl: albumData.coverUrl || publicData.publicUrl,
-        coverType: albumData.coverType || file.type,
+        coverUrl: albumData.coverUrl || firstUploadedUrl,
+        coverType: albumData.coverType || firstUploadedType,
         updatedAt: serverTimestamp()
       });
+
+      mediaFileInput.value = '';
+      mediaCaptionInput.value = '';
+      formMsg.textContent = `${uploadedCount} arquivo(s) enviado(s) com sucesso.`;
 
       formModal.classList.add('hidden');
       window.openAlbum(currentAlbumId);
