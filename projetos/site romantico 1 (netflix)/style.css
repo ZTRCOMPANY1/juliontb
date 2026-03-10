@@ -265,7 +265,7 @@ body {
 .hero-netflix {
   background:
     linear-gradient(to top, rgba(8,8,8,1) 0%, rgba(8,8,8,0.45) 45%, rgba(8,8,8,0.2) 100%),
-    url("https://images.unsplash.com/photo-1501901609772-df0848060b33?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat;
+    url("assets/fotos/foto4.jpg") center/cover no-repeat;
 }
 
 .hero-shade {
