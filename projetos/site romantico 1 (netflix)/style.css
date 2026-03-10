@@ -526,7 +526,7 @@ body {
   padding: 70px 40px 40px;
   background:
     linear-gradient(to top, rgba(8,8,8,1), rgba(8,8,8,0.4)),
-    url("https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat;
+    url("assets/fotos/foto4.jpg") center/cover no-repeat;
 }
 
 /* MAIN */
