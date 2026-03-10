@@ -1,4 +1,4 @@
-var DATA_NAMORO = "2026-01-10";
+var DATA_NAMORO = "2026-01-09";
 
 var fotos = [
   {
