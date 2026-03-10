@@ -7,8 +7,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loading-logo">LOVEFLIX</div>
+  </div>
+
+  <div id="introScreen" class="intro-screen">
+    <div class="intro-overlay"></div>
+    <div class="intro-content">
+      <p class="intro-mini">Uma história exclusiva</p>
+      <h1>LOVEFLIX</h1>
+      <p class="intro-text">Toda grande história merece ser assistida como uma série inesquecível.</p>
+      <button id="enterSiteBtn" class="btn btn-light">Entrar</button>
+    </div>
+  </div>
+
+  <div class="particles" id="particles"></div>
+
   <audio id="bgMusic" loop>
     <source src="assets/audio/music.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="clickSound">
+    <source src="assets/audio/click.mp3" type="audio/mpeg">
   </audio>
 
   <header class="topbar">
@@ -27,20 +47,19 @@
     </div>
   </header>
 
-  <section class="hero hero-netflix">
+  <section class="hero hero-netflix" id="heroBanner">
     <div class="hero-shade"></div>
 
     <div class="hero-content">
-      <p class="hero-kicker">Série romântica exclusiva (Eternamente)</p>
-      <h1>Nossa História</h1>
-      <p class="hero-description">
+      <p class="hero-kicker" id="heroKicker">Série romântica exclusiva Eternamente</p>
+      <h1 id="heroTitle">Nossa História</h1>
+      <p class="hero-description" id="heroDescription">
         Uma coleção dos nossos melhores capítulos, memórias, fotos e vídeos.
-        Cada momento aqui é uma parte do que construímos juntos.
       </p>
 
       <div class="hero-actions">
-        <a href="historia.html" class="btn btn-light">Assistir agora</a>
-        <a href="#secoes" class="btn btn-dark">Mais informações</a>
+        <a href="historia.html" class="btn btn-light click-sound">Assistir agora</a>
+        <a href="#secoes" class="btn btn-dark click-sound">Mais informações</a>
       </div>
 
       <div class="counter-box">
@@ -57,14 +76,18 @@
       <div class="section-head">
         <h2>Temporadas da relação</h2>
       </div>
-
       <div class="season-grid" id="seasonGrid"></div>
     </section>
 
     <section class="row-section">
-      <div class="section-head">
+      <div class="section-head with-arrows">
         <h2>Continue assistindo nossa história</h2>
+        <div class="row-arrows">
+          <button class="arrow-btn" data-target="homeRow" data-direction="left">‹</button>
+          <button class="arrow-btn" data-target="homeRow" data-direction="right">›</button>
+        </div>
       </div>
+
       <div class="netflix-row" id="homeRow"></div>
     </section>
   </main>

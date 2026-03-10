@@ -7,8 +7,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="particles" id="particles"></div>
+
   <audio id="bgMusic" loop>
     <source src="assets/audio/music.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="clickSound">
+    <source src="assets/audio/click.mp3" type="audio/mpeg">
   </audio>
 
   <header class="topbar">
@@ -32,24 +38,39 @@
     <div class="page-hero-content">
       <h1>Nossa História</h1>
       <p>
-        Aqui estão os capítulos da nossa jornada. Passe o mouse nos cards para ver o preview.
+        Escolha uma temporada para ver os capítulos disponíveis.
       </p>
     </div>
   </section>
 
   <main class="main-content">
-    <section class="row-section">
+    <section class="season-section">
       <div class="section-head">
-        <h2>Fotos</h2>
+        <h2>Selecionar temporada</h2>
       </div>
-      <div class="netflix-row" id="photoRow"></div>
+      <div class="season-grid selectable" id="seasonSelection"></div>
     </section>
 
-    <section class="row-section">
-      <div class="section-head">
-        <h2>Vídeos</h2>
+    <section id="seasonContentSection" class="row-section">
+      <div class="section-head with-arrows">
+        <h2 id="seasonTitle">Temporada 1</h2>
+        <div class="row-arrows">
+          <button class="arrow-btn" data-target="seasonRow" data-direction="left">‹</button>
+          <button class="arrow-btn" data-target="seasonRow" data-direction="right">›</button>
+        </div>
       </div>
-      <div class="netflix-row" id="videoRow"></div>
+
+      <div class="netflix-row" id="seasonRow"></div>
+    </section>
+
+    <section id="comingSoonSection" class="coming-soon hidden">
+      <div class="coming-soon-box">
+        <span>LOVEFLIX ORIGINAL</span>
+        <h2>Temporada sairá em breve</h2>
+        <p>
+          Novos capítulos da nossa história ainda estão sendo preparados.
+        </p>
+      </div>
     </section>
   </main>
 
