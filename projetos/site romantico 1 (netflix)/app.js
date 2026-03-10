@@ -1,23 +1,23 @@
-var DATA_NAMORO = "2024-06-12";
+var DATA_NAMORO = "2026-01-10";
 
 var fotos = [
   {
     id: 1,
     tipo: "foto",
     titulo: "O começo de tudo",
-    data: "2024-06-12",
-    descricao: "Esse foi o capítulo onde tudo começou. Um momento que marcou para sempre a nossa história.",
-    imagem: "assets/fotos/foto1.jpg",
-    preview: "assets/videos/trailer1.mp4",
+    data: "2025-10-06",
+    descricao: "Esse foi o dia em que te conheci no salão de festa. E o começo da nossa história.",
+    imagem: "assets/thumbs/comeco2.jpg",
+    preview: "",
     temporada: "Temporada 1"
   },
   {
     id: 2,
     tipo: "foto",
     titulo: "Nosso primeiro passeio",
-    data: "2024-06-20",
-    descricao: "Um daqueles dias que parecem simples, mas viram lembranças gigantes no coração.",
-    imagem: "assets/fotos/foto2.jpg",
+    data: "2025-02-09",
+    descricao: "O primeiro dia em que te limpei, o dia mais fofo que eu tive. E isso vai acontecer a cada 1 Mês",
+    imagem: "assets/fotos/2.jpg",
     preview: "assets/videos/trailer2.mp4",
     temporada: "Temporada 1"
   },
@@ -25,31 +25,31 @@ var fotos = [
     id: 3,
     tipo: "foto",
     titulo: "Sorrisos juntos",
-    data: "2024-07-05",
+    data: "2025-02-09",
     descricao: "Essa foto guarda uma energia linda e um momento muito especial.",
-    imagem: "assets/fotos/foto3.jpg",
-    preview: "assets/videos/trailer1.mp4",
-    temporada: "Temporada 2"
+    imagem: "assets/thumbs/12.jpg",
+    preview: "",
+    temporada: "Temporada 1"
   },
   {
     id: 4,
     tipo: "foto",
     titulo: "Mais um capítulo lindo",
-    data: "2024-08-10",
-    descricao: "Cada fase da nossa história teve sua beleza, e essa foto representa muito bem uma delas.",
-    imagem: "assets/fotos/foto4.jpg",
-    preview: "assets/videos/trailer2.mp4",
-    temporada: "Temporada 3"
+    data: "2025-03-11",
+    descricao: "Aqui começa mais 1 capitulo Maravilhoso.",
+    imagem: "assets/fotos/foto3.jpg",
+    preview: "assets/videos/trailer1.mp4",
+    temporada: "Temporada 2 (Em Breve)"
   },
   {
     id: 5,
     tipo: "foto",
     titulo: "Uma memória eterna",
-    data: "2024-09-02",
-    descricao: "Tem fotos que não são só imagens. Elas viram abrigo de sentimento.",
-    imagem: "assets/fotos/foto5.jpg",
-    preview: "assets/videos/trailer1.mp4",
-    temporada: "Temporada 4"
+    data: "2025-12-12",
+    descricao: "O dia em que peguei as 1000 noites no 99 noites, Um dia muito especial pra mim.",
+    imagem: "assets/thumbs/5.jpg",
+    preview: "",
+    temporada: "Temporada 1"
   }
 ];
 
@@ -58,21 +58,21 @@ var videos = [
     id: 1,
     tipo: "video",
     titulo: "Nosso vídeo especial",
-    data: "2024-09-15",
-    descricao: "Um vídeo para reviver sentimentos e um momento muito especial.",
-    video: "assets/videos/video1.mp4",
-    thumb: "assets/thumbs/video1.jpg",
+    data: "2026-01-03",
+    descricao: "O primeiro video que você fez e me mandou, fiquei feliz de mais moxinho.",
+    video: "assets/videos/7.mp4",
+    thumb: "assets/fotos/2.jpg",
     temporada: "Temporada 1"
   },
   {
     id: 2,
     tipo: "video",
     titulo: "Um dia inesquecível",
-    data: "2024-10-01",
+    data: "2026-01-09",
     descricao: "Esse vídeo guarda um instante único.",
-    video: "assets/videos/video2.mp4",
-    thumb: "assets/thumbs/video2.jpg",
-    temporada: "Temporada 2"
+    video: "assets/videos/6.mp4",
+    thumb: "assets/thumbs/9.jpg",
+    temporada: "Temporada 1"
   }
 ];
 
@@ -86,16 +86,6 @@ var temporadas = [
     nome: "Temporada 2",
     subtitulo: "Conexão",
     descricao: "Novos capítulos estão chegando."
-  },
-  {
-    nome: "Temporada 3",
-    subtitulo: "Memórias marcantes",
-    descricao: "Em breve."
-  },
-  {
-    nome: "Temporada 4",
-    subtitulo: "Nossa continuação",
-    descricao: "Em breve."
   }
 ];
 
@@ -104,9 +94,9 @@ var todosOsItens = fotos.concat(videos);
 var heroSlides = [
   {
     titulo: "Nossa História",
-    kicker: "Série romântica exclusiva",
+    kicker: "Série romântica exclusiva Eternamente",
     descricao: "Uma coleção dos nossos melhores capítulos, memórias, fotos e vídeos.",
-    imagem: "https://images.unsplash.com/photo-1501901609772-df0848060b33?auto=format&fit=crop&w=1800&q=80"
+    imagem: "assets/fotos/foto6.jpg"
   }
 ];
 
