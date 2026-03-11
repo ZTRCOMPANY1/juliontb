@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZTR Control System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-badge">Z</div>
+        <div>
+          <h1>ZTR Control</h1>
+          <p>System Dashboard</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+        <button class="nav-btn" data-section="monitoramento">Monitoramento</button>
+        <button class="nav-btn" data-section="analytics">Analytics</button>
+        <button class="nav-btn" data-section="seguranca">Segurança</button>
+        <button class="nav-btn" data-section="logs">Logs</button>
+        <button class="nav-btn" data-section="projetos">Projetos</button>
+        <button class="nav-btn" data-section="eventos">Eventos</button>
+        <button class="nav-btn" data-section="automacao">Automação</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="mini-status">
+          <span class="pulse-dot"></span>
+          Sistema operacional
+        </div>
+        <p>GitHub Ready • Sem backend</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle">☰</button>
+          <div>
+            <h2 id="sectionTitle">Dashboard Principal</h2>
+            <p id="sectionSubtitle">Visão geral do seu ecossistema digital</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="live-clock" id="liveClock">--:--:--</div>
+          <button class="action-btn" id="refreshBtn">Atualizar</button>
+        </div>
+      </header>
+
+      <section class="content active" id="dashboard">
+        <div class="hero-card glass">
+          <div>
+            <p class="eyebrow">Painel central</p>
+            <h3>Controle total dos seus sites, projetos e monitoramento</h3>
+            <p class="hero-text">
+              Acompanhe uptime, visitantes, segurança, eventos, erros e automações em um só lugar.
+            </p>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-pill">
+              <span>Total de sites</span>
+              <strong id="heroTotalSites">0</strong>
+            </div>
+            <div class="hero-pill">
+              <span>Online agora</span>
+              <strong id="heroOnlineSites">0</strong>
+            </div>
+            <div class="hero-pill">
+              <span>Alertas ativos</span>
+              <strong id="heroAlerts">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <article class="stat-card glass">
+            <p>Status Geral</p>
+            <h4 id="statusGeral">-</h4>
+            <span class="muted">Sites online / offline</span>
+          </article>
+
+          <article class="stat-card glass">
+            <p>Tempo de resposta</p>
+            <h4 id="tempoRespostaMedio">-</h4>
+            <span class="muted">Média em milissegundos</span>
+          </article>
+
+          <article class="stat-card glass">
+            <p>Uptime médio</p>
+            <h4 id="uptimeMedio">-</h4>
+            <span class="muted">Disponibilidade geral</span>
+          </article>
+
+          <article class="stat-card glass">
+            <p>Visitantes hoje</p>
+            <h4 id="visitantesHoje">-</h4>
+            <span class="muted">Últimas 24 horas</span>
+          </article>
+        </div>
+
+        <div class="layout-two">
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Sites monitorados</h3>
+              <span class="badge">Tempo real visual</span>
+            </div>
+            <div class="site-list" id="siteListDashboard"></div>
+          </article>
+
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Gráfico de acessos</h3>
+              <span class="badge">7 dias</span>
+            </div>
+            <canvas id="accessChart" height="260"></canvas>
+          </article>
+        </div>
+
+        <div class="layout-two">
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Alertas recentes</h3>
+              <span class="badge alert">Importante</span>
+            </div>
+            <div class="alert-list" id="alertList"></div>
+          </article>
+
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Últimas atualizações</h3>
+              <span class="badge success">Atualizado</span>
+            </div>
+            <div class="timeline" id="timelineUpdates"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content" id="monitoramento">
+        <div class="section-head">
+          <div>
+            <h3>Monitoramento de Sites</h3>
+            <p>Ping automático, status HTTP, uptime e histórico de quedas.</p>
+          </div>
+        </div>
+
+        <article class="panel glass">
+          <div class="panel-header">
+            <h3>Lista de monitoramento</h3>
+            <span class="badge">Live</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Site</th>
+                  <th>Status</th>
+                  <th>HTTP</th>
+                  <th>Ping</th>
+                  <th>Uptime</th>
+                  <th>Última checagem</th>
+                </tr>
+              </thead>
+              <tbody id="monitorTable"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="layout-two">
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Histórico de quedas</h3>
+            </div>
+            <div class="event-list" id="downtimeHistory"></div>
+          </article>
+
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Alertas automáticos</h3>
+            </div>
+            <div class="alert-box">
+              <p>Quando um site cai, o sistema cria um alerta visual automático.</p>
+              <button class="action-btn secondary" id="simulateFailureBtn">Simular queda</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content" id="analytics">
+        <div class="section-head">
+          <div>
+            <h3>Analytics do Site</h3>
+            <p>Visitantes, páginas mais acessadas, dispositivos e origem do tráfego.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <article class="stat-card glass">
+            <p>Visitantes totais</p>
+            <h4 id="analyticsVisitors">-</h4>
+            <span class="muted">Últimos 7 dias</span>
+          </article>
+
+          <article class="stat-card glass">
+            <p>Tempo médio</p>
+            <h4 id="avgTimeSite">-</h4>
+            <span class="muted">No site</span>
+          </article>
+
+          <article class="stat-card glass">
+            <p>Dispositivo principal</p>
+            <h4 id="mainDevice">-</h4>
+            <span class="muted">Maior uso</span>
+          </article>
+
+          <article class="stat-card glass">
+            <p>Origem principal</p>
+            <h4 id="mainTraffic">-</h4>
+            <span class="muted">Maior tráfego</span>
+          </article>
+        </div>
+
+        <div class="layout-two">
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Visitas por dia</h3>
+            </div>
+            <canvas id="visitsChart" height="260"></canvas>
+          </article>
+
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Páginas mais visitadas</h3>
+            </div>
+            <div class="rank-list" id="topPages"></div>
+          </article>
+        </div>
+
+        <div class="layout-two">
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>País dos visitantes</h3>
+            </div>
+            <div class="rank-list" id="countryList"></div>
+          </article>
+
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Dispositivos usados</h3>
+            </div>
+            <div class="rank-list" id="deviceList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content" id="seguranca">
+        <div class="section-head">
+          <div>
+            <h3>Segurança</h3>
+            <p>SSL, tentativas de login, IPs suspeitos, malware e logs de acesso.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <article class="stat-card glass">
+            <p>Status SSL</p>
+            <h4 id="sslStatus">-</h4>
+            <span class="muted">Certificado</span>
+          </article>
+
+          <article class="stat-card glass">
+            <p>Tentativas de login</p>
+            <h4 id="loginAttempts">-</h4>
+            <span class="muted">Últimas 24h</span>
+          </article>
+
+          <article class="stat-card glass">
+            <p>IPs suspeitos</p>
+            <h4 id="suspiciousIpsCount">-</h4>
+            <span class="muted">Monitorados</span>
+          </article>
+
+          <article class="stat-card glass">
+            <p>Malware</p>
+            <h4 id="malwareStatus">-</h4>
+            <span class="muted">Verificação</span>
+          </article>
+        </div>
+
+        <div class="layout-two">
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>IPs suspeitos</h3>
+            </div>
+            <div class="event-list" id="suspiciousIpList"></div>
+          </article>
+
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Logs de acesso</h3>
+            </div>
+            <div class="log-box" id="accessLogs"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content" id="logs">
+        <div class="section-head">
+          <div>
+            <h3>Sistema de Logs</h3>
+            <p>Erros JavaScript, erros 404, eventos do sistema e histórico de atividade.</p>
+          </div>
+        </div>
+
+        <article class="panel glass">
+          <div class="panel-header">
+            <h3>Console de logs</h3>
+            <span class="badge">Eventos</span>
+          </div>
+          <div class="log-console" id="systemLogs"></div>
+        </article>
+      </section>
+
+      <section class="content" id="projetos">
+        <div class="section-head">
+          <div>
+            <h3>Gerenciador de Projetos</h3>
+            <p>Status, progresso e links dos seus projetos digitais.</p>
+          </div>
+        </div>
+
+        <div class="project-grid" id="projectGrid"></div>
+      </section>
+
+      <section class="content" id="eventos">
+        <div class="section-head">
+          <div>
+            <h3>Eventos / Atualizações</h3>
+            <p>Próximos eventos, novidades do site e tarefas pendentes.</p>
+          </div>
+        </div>
+
+        <div class="layout-two">
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Próximos eventos</h3>
+            </div>
+            <div class="event-list" id="upcomingEvents"></div>
+          </article>
+
+          <article class="panel glass">
+            <div class="panel-header">
+              <h3>Tarefas e atualizações</h3>
+            </div>
+            <div class="event-list" id="tasksUpdates"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content" id="automacao">
+        <div class="section-head">
+          <div>
+            <h3>Automação</h3>
+            <p>Backup, cache, verificação de uptime e atualizações automáticas.</p>
+          </div>
+        </div>
+
+        <div class="automation-grid">
+          <article class="automation-card glass">
+            <h4>Backup automático</h4>
+            <p>Cópias de segurança em horários programados.</p>
+            <label class="switch">
+              <input type="checkbox" class="automation-toggle" data-key="backup" checked />
+              <span class="slider"></span>
+            </label>
+          </article>
+
+          <article class="automation-card glass">
+            <h4>Atualização automática</h4>
+            <p>Atualiza os dados visuais do painel automaticamente.</p>
+            <label class="switch">
+              <input type="checkbox" class="automation-toggle" data-key="autoUpdate" checked />
+              <span class="slider"></span>
+            </label>
+          </article>
+
+          <article class="automation-card glass">
+            <h4>Verificação de uptime</h4>
+            <p>Revisão contínua do status dos sites monitorados.</p>
+            <label class="switch">
+              <input type="checkbox" class="automation-toggle" data-key="uptimeCheck" checked />
+              <span class="slider"></span>
+            </label>
+          </article>
+
+          <article class="automation-card glass">
+            <h4>Limpeza de cache</h4>
+            <p>Rotina simulada de limpeza para manter o painel leve.</p>
+            <label class="switch">
+              <input type="checkbox" class="automation-toggle" data-key="cacheClean" />
+              <span class="slider"></span>
+            </label>
+          </article>
+        </div>
+
+        <article class="panel glass">
+          <div class="panel-header">
+            <h3>Status das automações</h3>
+          </div>
+          <div class="event-list" id="automationStatus"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
