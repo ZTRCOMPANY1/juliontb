@@ -1,194 +1,14 @@
-const dashboardData = {
-  sites: [
-    {
-      name: "siteofcastronomia.site",
-      status: "online",
-      ping: 120,
-      http: 200,
-      uptime: 99.98,
-      visitorsToday: 842,
-      lastUpdate: "Hoje, 20:08",
-      lastCheck: "20:14",
-      downtime: "Nenhuma queda nas últimas 48h"
-    },
-    {
-      name: "ztrcompany.site",
-      status: "online",
-      ping: 96,
-      http: 200,
-      uptime: 99.92,
-      visitorsToday: 523,
-      lastUpdate: "Hoje, 19:55",
-      lastCheck: "20:14",
-      downtime: "Queda de 3 min ontem às 22:11"
-    },
-    {
-      name: "painelztr.github.io",
-      status: "offline",
-      ping: 0,
-      http: 503,
-      uptime: 96.41,
-      visitorsToday: 138,
-      lastUpdate: "Hoje, 18:22",
-      lastCheck: "20:14",
-      downtime: "Indisponível desde 20:10"
-    },
-    {
-      name: "galeria-love.site",
-      status: "online",
-      ping: 143,
-      http: 200,
-      uptime: 99.70,
-      visitorsToday: 214,
-      lastUpdate: "Hoje, 19:40",
-      lastCheck: "20:14",
-      downtime: "Nenhuma queda nas últimas 24h"
-    }
-  ],
-  access7d: [420, 610, 540, 860, 940, 1100, 1320],
-  visits7d: [1800, 2100, 1960, 2330, 2570, 2810, 3090],
-  alerts: [
-    { type: "danger", title: "painelztr.github.io offline", desc: "O sistema detectou falha HTTP 503 e indisponibilidade.", time: "Agora" },
-    { type: "warning", title: "Aumento no tempo de resposta", desc: "siteofcastronomia.site chegou a 220ms no pico.", time: "Há 14 min" },
-    { type: "success", title: "SSL validado", desc: "ztrcompany.site com certificado ativo e seguro.", time: "Há 27 min" }
-  ],
-  updates: [
-    { title: "Deploy concluído em ztrcompany.site", desc: "Nova atualização visual aplicada com sucesso.", time: "Hoje, 19:55" },
-    { title: "Backup automático executado", desc: "Cópia de segurança salva localmente.", time: "Hoje, 18:00" },
-    { title: "Cache limpo no painel", desc: "Dados temporários removidos para melhor desempenho.", time: "Hoje, 16:30" }
-  ],
-  topPages: [
-    { name: "/inicio", value: 1850 },
-    { name: "/nossa-historia", value: 1260 },
-    { name: "/quiz", value: 913 },
-    { name: "/album", value: 772 },
-    { name: "/contato", value: 504 }
-  ],
-  countries: [
-    { name: "Brasil", value: 82 },
-    { name: "Portugal", value: 8 },
-    { name: "Estados Unidos", value: 5 },
-    { name: "Argentina", value: 3 },
-    { name: "Canadá", value: 2 }
-  ],
-  devices: [
-    { name: "Mobile", value: 64 },
-    { name: "Desktop", value: 29 },
-    { name: "Tablet", value: 7 }
-  ],
-  security: {
-    sslStatus: "Seguro",
-    loginAttempts: 42,
-    suspiciousIps: [
-      "185.221.77.91 • Tentativa de login inválida",
-      "201.19.88.14 • Requisições excessivas",
-      "45.172.22.19 • Acesso fora do padrão"
-    ],
-    malwareStatus: "Nenhuma ameaça"
-  },
-  accessLogs: [
-    "[20:01] LOGIN admin",
-    "[20:02] GET /dashboard 200",
-    "[20:04] GET /analytics 200",
-    "[20:08] POST /refresh-monitor 200",
-    "[20:10] GET /painelztr.github.io 503"
-  ],
-  systemLogs: [
-    "[19:41] INFO SITE ONLINE siteofcastronomia.site",
-    "[19:48] WARN LATÊNCIA ELEVADA ztrcompany.site 188ms",
-    "[19:52] ERROR 404 /pagina-x",
-    "[19:55] INFO DEPLOY CONCLUÍDO ztrcompany.site",
-    "[20:01] LOGIN admin",
-    "[20:07] INFO BACKUP EXECUTADO",
-    "[20:10] ERROR SITE OFFLINE painelztr.github.io",
-    "[20:12] INFO SSL VALIDADO"
-  ],
-  projects: [
-    {
-      name: "Site OFC Astronomia",
-      status: "Online",
-      progress: 84,
-      desc: "Portal com monitoramento, eventos astronômicos e artigos.",
-      links: ["https://siteofcastronomia.site", "#"]
-    },
-    {
-      name: "ZTR Company",
-      status: "Em produção",
-      progress: 72,
-      desc: "Site principal da empresa com portfólio, serviços e projetos.",
-      links: ["https://ztrcompany.site", "#"]
-    },
-    {
-      name: "Jogos Unity",
-      status: "Desenvolvimento",
-      progress: 58,
-      desc: "Área para acompanhar builds, ideias e progresso dos games.",
-      links: ["#", "#"]
-    },
-    {
-      name: "Canal do YouTube",
-      status: "Ativo",
-      progress: 61,
-      desc: "Organização de vídeos, thumbnails, metas e calendário de conteúdo.",
-      links: ["#", "#"]
-    }
-  ],
-  events: [
-    { title: "Chuva de meteoros", meta: "12/03 • 22:00", desc: "Evento astronômico destacado para publicação no site." },
-    { title: "Atualização da home", meta: "14/03 • 18:00", desc: "Nova versão do layout principal." },
-    { title: "Revisão de SEO", meta: "16/03 • 15:30", desc: "Ajustes de performance e indexação." }
-  ],
-  tasks: [
-    { title: "Adicionar novo card de projeto", meta: "Pendente", desc: "Inserir projeto novo no gerenciador." },
-    { title: "Revisar página de segurança", meta: "Em andamento", desc: "Melhorar logs e monitoramento de IP." },
-    { title: "Publicar atualização de analytics", meta: "Concluído", desc: "Novos dados visuais adicionados ao painel." }
-  ]
-};
+const UPTIMEROBOT_API_KEY = "ur3360004-10ca3da10a0bddcb527812d2";
 
-const sectionMeta = {
-  dashboard: {
-    title: "Dashboard Principal",
-    subtitle: "Visão geral do seu ecossistema digital"
-  },
-  monitoramento: {
-    title: "Monitoramento de Sites",
-    subtitle: "Status, ping, uptime e histórico de quedas"
-  },
-  analytics: {
-    title: "Analytics do Site",
-    subtitle: "Visitantes, páginas mais acessadas e tráfego"
-  },
-  seguranca: {
-    title: "Segurança",
-    subtitle: "SSL, logins, IPs suspeitos e verificação"
-  },
-  logs: {
-    title: "Sistema de Logs",
-    subtitle: "Eventos do sistema e erros monitorados"
-  },
-  projetos: {
-    title: "Gerenciador de Projetos",
-    subtitle: "Acompanhe progresso, status e links"
-  },
-  eventos: {
-    title: "Eventos / Atualizações",
-    subtitle: "Próximas ações, eventos e novidades"
-  },
-  automacao: {
-    title: "Automação",
-    subtitle: "Rotinas automáticas do painel"
-  }
-};
+// Domínios que você quer verificar na segurança:
+const SECURITY_DOMAINS = [
+  "juliontb.site",
+  "ztrcompany.site",
+  "juliontb.site/projetos/2%20meses/",
+  "ztrcompany.site"
+];
 
-const automationDefault = {
-  backup: true,
-  autoUpdate: true,
-  uptimeCheck: true,
-  cacheClean: false
-};
-
-let automationState = JSON.parse(localStorage.getItem("ztr_automation")) || automationDefault;
-
+// ===== Navegação =====
 const navButtons = document.querySelectorAll(".nav-btn");
 const contents = document.querySelectorAll(".content");
 const sectionTitle = document.getElementById("sectionTitle");
@@ -197,230 +17,12 @@ const refreshBtn = document.getElementById("refreshBtn");
 const menuToggle = document.getElementById("menuToggle");
 const sidebar = document.getElementById("sidebar");
 
-function formatNumber(num) {
-  return new Intl.NumberFormat("pt-BR").format(num);
-}
-
-function getStatusLabel(status) {
-  return status === "online" ? "🟢 Online" : "🔴 Offline";
-}
-
-function getStatusClass(status) {
-  return status === "online" ? "online" : "offline";
-}
-
-function renderDashboard() {
-  const totalSites = dashboardData.sites.length;
-  const onlineSites = dashboardData.sites.filter(site => site.status === "online").length;
-  const offlineSites = totalSites - onlineSites;
-  const avgPing = Math.round(
-    dashboardData.sites.reduce((acc, site) => acc + site.ping, 0) /
-    dashboardData.sites.filter(site => site.ping > 0).length
-  );
-  const avgUptime = (
-    dashboardData.sites.reduce((acc, site) => acc + site.uptime, 0) / totalSites
-  ).toFixed(2);
-  const totalVisitors = dashboardData.sites.reduce((acc, site) => acc + site.visitorsToday, 0);
-
-  document.getElementById("heroTotalSites").textContent = totalSites;
-  document.getElementById("heroOnlineSites").textContent = onlineSites;
-  document.getElementById("heroAlerts").textContent = dashboardData.alerts.length;
-
-  document.getElementById("statusGeral").textContent = `${onlineSites} online / ${offlineSites} offline`;
-  document.getElementById("tempoRespostaMedio").textContent = `${avgPing}ms`;
-  document.getElementById("uptimeMedio").textContent = `${avgUptime}%`;
-  document.getElementById("visitantesHoje").textContent = formatNumber(totalVisitors);
-
-  const siteListDashboard = document.getElementById("siteListDashboard");
-  siteListDashboard.innerHTML = dashboardData.sites.map(site => `
-    <div class="site-item">
-      <div class="site-item-top">
-        <strong>${site.name}</strong>
-        <span class="status ${getStatusClass(site.status)}">${getStatusLabel(site.status)}</span>
-      </div>
-      <div class="site-meta">
-        <span class="chip">⚡ ${site.ping > 0 ? `${site.ping}ms` : "—"}</span>
-        <span class="chip">📶 HTTP ${site.http}</span>
-        <span class="chip">🕒 Uptime ${site.uptime}%</span>
-        <span class="chip">👥 ${formatNumber(site.visitorsToday)} hoje</span>
-      </div>
-    </div>
-  `).join("");
-
-  const alertList = document.getElementById("alertList");
-  alertList.innerHTML = dashboardData.alerts.map(item => `
-    <div class="alert-item">
-      <strong>${item.title}</strong>
-      <div>${item.desc}</div>
-      <div class="event-meta">
-        <span class="chip">${item.time}</span>
-      </div>
-    </div>
-  `).join("");
-
-  const timeline = document.getElementById("timelineUpdates");
-  timeline.innerHTML = dashboardData.updates.map(item => `
-    <div class="timeline-item">
-      <strong>${item.title}</strong>
-      <div>${item.desc}</div>
-      <div class="event-meta">
-        <span class="chip">${item.time}</span>
-      </div>
-    </div>
-  `).join("");
-}
-
-function renderMonitoring() {
-  const table = document.getElementById("monitorTable");
-  table.innerHTML = dashboardData.sites.map(site => `
-    <tr>
-      <td>${site.name}</td>
-      <td><span class="status ${getStatusClass(site.status)}">${getStatusLabel(site.status)}</span></td>
-      <td>${site.http}</td>
-      <td>${site.ping > 0 ? `${site.ping}ms` : "—"}</td>
-      <td>${site.uptime}%</td>
-      <td>${site.lastCheck}</td>
-    </tr>
-  `).join("");
-
-  document.getElementById("downtimeHistory").innerHTML = dashboardData.sites.map(site => `
-    <div class="event-item">
-      <strong>${site.name}</strong>
-      <div>${site.downtime}</div>
-      <div class="event-meta">
-        <span class="chip">Última atualização: ${site.lastUpdate}</span>
-      </div>
-    </div>
-  `).join("");
-}
-
-function renderAnalytics() {
-  const totalVisitors = dashboardData.visits7d.reduce((a, b) => a + b, 0);
-
-  document.getElementById("analyticsVisitors").textContent = formatNumber(totalVisitors);
-  document.getElementById("avgTimeSite").textContent = "4m 38s";
-  document.getElementById("mainDevice").textContent = dashboardData.devices[0].name;
-  document.getElementById("mainTraffic").textContent = "Orgânico";
-
-  document.getElementById("topPages").innerHTML = dashboardData.topPages.map((page, i) => `
-    <div class="rank-item">
-      <div class="rank-item-top">
-        <strong>${i + 1}. ${page.name}</strong>
-        <span class="chip">${formatNumber(page.value)} visitas</span>
-      </div>
-    </div>
-  `).join("");
-
-  document.getElementById("countryList").innerHTML = dashboardData.countries.map(country => `
-    <div class="rank-item">
-      <div class="rank-item-top">
-        <strong>${country.name}</strong>
-        <span class="chip">${country.value}%</span>
-      </div>
-    </div>
-  `).join("");
-
-  document.getElementById("deviceList").innerHTML = dashboardData.devices.map(device => `
-    <div class="rank-item">
-      <div class="rank-item-top">
-        <strong>${device.name}</strong>
-        <span class="chip">${device.value}%</span>
-      </div>
-    </div>
-  `).join("");
-}
-
-function renderSecurity() {
-  document.getElementById("sslStatus").textContent = dashboardData.security.sslStatus;
-  document.getElementById("loginAttempts").textContent = dashboardData.security.loginAttempts;
-  document.getElementById("suspiciousIpsCount").textContent = dashboardData.security.suspiciousIps.length;
-  document.getElementById("malwareStatus").textContent = dashboardData.security.malwareStatus;
-
-  document.getElementById("suspiciousIpList").innerHTML = dashboardData.security.suspiciousIps.map(ip => `
-    <div class="event-item">
-      <strong>IP suspeito</strong>
-      <div>${ip}</div>
-    </div>
-  `).join("");
-
-  document.getElementById("accessLogs").innerHTML = dashboardData.accessLogs.map(log => `
-    <div class="log-line">${log}</div>
-  `).join("");
-}
-
-function renderLogs() {
-  document.getElementById("systemLogs").innerHTML = dashboardData.systemLogs.map(log => `
-    <div class="log-line">${log}</div>
-  `).join("");
-}
-
-function renderProjects() {
-  document.getElementById("projectGrid").innerHTML = dashboardData.projects.map(project => `
-    <div class="project-card glass">
-      <div class="project-top">
-        <h4>${project.name}</h4>
-        <span class="chip">${project.status}</span>
-      </div>
-      <p>${project.desc}</p>
-      <div class="progress">
-        <span style="width:${project.progress}%"></span>
-      </div>
-      <div class="project-bottom">
-        <span class="chip">Progresso ${project.progress}%</span>
-      </div>
-      <div class="project-links">
-        <a href="${project.links[0]}" target="_blank">Abrir</a>
-        <a href="${project.links[1]}" target="_blank">Detalhes</a>
-      </div>
-    </div>
-  `).join("");
-}
-
-function renderEvents() {
-  document.getElementById("upcomingEvents").innerHTML = dashboardData.events.map(event => `
-    <div class="event-item">
-      <strong>${event.title}</strong>
-      <div>${event.desc}</div>
-      <div class="event-meta">
-        <span class="chip">${event.meta}</span>
-      </div>
-    </div>
-  `).join("");
-
-  document.getElementById("tasksUpdates").innerHTML = dashboardData.tasks.map(task => `
-    <div class="event-item">
-      <strong>${task.title}</strong>
-      <div>${task.desc}</div>
-      <div class="event-meta">
-        <span class="chip">${task.meta}</span>
-      </div>
-    </div>
-  `).join("");
-}
-
-function renderAutomation() {
-  document.querySelectorAll(".automation-toggle").forEach(toggle => {
-    const key = toggle.dataset.key;
-    toggle.checked = !!automationState[key];
-  });
-
-  const statuses = [
-    { key: "backup", label: "Backup automático" },
-    { key: "autoUpdate", label: "Atualização automática" },
-    { key: "uptimeCheck", label: "Verificação de uptime" },
-    { key: "cacheClean", label: "Limpeza de cache" }
-  ];
-
-  document.getElementById("automationStatus").innerHTML = statuses.map(item => `
-    <div class="event-item">
-      <strong>${item.label}</strong>
-      <div>${automationState[item.key] ? "Ativado" : "Desativado"}</div>
-      <div class="event-meta">
-        <span class="chip">${automationState[item.key] ? "Em execução" : "Parado"}</span>
-      </div>
-    </div>
-  `).join("");
-}
+const sectionMeta = {
+  dashboard: { title: "Dashboard", subtitle: "Dados reais de monitoramento" },
+  monitoramento: { title: "Monitoramento", subtitle: "Status real via API" },
+  seguranca: { title: "Segurança", subtitle: "Análise real de headers e SSL" },
+  integracoes: { title: "Integrações", subtitle: "Configuração das APIs reais" }
+};
 
 function switchSection(sectionId) {
   contents.forEach(section => section.classList.remove("active"));
@@ -432,203 +34,210 @@ function switchSection(sectionId) {
   sectionTitle.textContent = sectionMeta[sectionId].title;
   sectionSubtitle.textContent = sectionMeta[sectionId].subtitle;
 
-  if (window.innerWidth <= 860) {
-    sidebar.classList.remove("open");
-  }
+  if (window.innerWidth <= 860) sidebar.classList.remove("open");
 }
 
-function setupNavigation() {
-  navButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      switchSection(btn.dataset.section);
-    });
-  });
-}
+navButtons.forEach(btn => {
+  btn.addEventListener("click", () => switchSection(btn.dataset.section));
+});
+
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("open");
+});
 
 function startClock() {
   const clock = document.getElementById("liveClock");
-  const updateClock = () => {
-    const now = new Date();
-    clock.textContent = now.toLocaleTimeString("pt-BR");
+  const tick = () => {
+    clock.textContent = new Date().toLocaleTimeString("pt-BR");
   };
-  updateClock();
-  setInterval(updateClock, 1000);
+  tick();
+  setInterval(tick, 1000);
 }
 
-function drawLineChart(canvasId, data, labels) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
+// ===== Helpers =====
+function formatNumber(num) {
+  return new Intl.NumberFormat("pt-BR").format(num);
+}
 
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = 260 * dpr;
-  ctx.scale(dpr, dpr);
+function getStatusInfo(statusCode) {
+  // UptimeRobot status codes comuns:
+  // 0 paused, 1 not checked yet, 2 up, 8 seems down, 9 down
+  if (statusCode === 2) return { text: "🟢 Online", className: "online" };
+  return { text: "🔴 Offline", className: "offline" };
+}
 
-  const width = rect.width;
-  const height = 260;
+function avg(arr) {
+  if (!arr.length) return 0;
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
 
-  ctx.clearRect(0, 0, width, height);
-
-  const padding = 36;
-  const maxValue = Math.max(...data) * 1.15;
-
-  ctx.strokeStyle = "rgba(255,255,255,0.08)";
-  ctx.lineWidth = 1;
-
-  for (let i = 0; i < 5; i++) {
-    const y = padding + ((height - padding * 2) / 4) * i;
-    ctx.beginPath();
-    ctx.moveTo(padding, y);
-    ctx.lineTo(width - padding, y);
-    ctx.stroke();
+// ===== UptimeRobot real =====
+async function loadUptimeRobotData() {
+  if (!UPTIMEROBOT_API_KEY || UPTIMEROBOT_API_KEY === "u3360004-835ddf630377a084ee4bcb05") {
+    renderMissingApiKey();
+    return;
   }
 
-  ctx.beginPath();
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = "#59d0ff";
-
-  data.forEach((value, index) => {
-    const x = padding + (index * (width - padding * 2)) / (data.length - 1);
-    const y = height - padding - (value / maxValue) * (height - padding * 2);
-    if (index === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-
-  ctx.stroke();
-
-  data.forEach((value, index) => {
-    const x = padding + (index * (width - padding * 2)) / (data.length - 1);
-    const y = height - padding - (value / maxValue) * (height - padding * 2);
-
-    ctx.beginPath();
-    ctx.fillStyle = "#4fffb3";
-    ctx.arc(x, y, 4.5, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "#9cb0cf";
-    ctx.font = "12px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText(labels[index], x, height - 14);
-  });
-}
-
-function renderCharts() {
-  drawLineChart("accessChart", dashboardData.access7d, ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]);
-  drawLineChart("visitsChart", dashboardData.visits7d, ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]);
-}
-
-function setupRefresh() {
-  refreshBtn.addEventListener("click", () => {
-    randomizeData();
-    rerenderAll();
-  });
-}
-
-function randomizeData() {
-  dashboardData.sites = dashboardData.sites.map(site => {
-    const isOnline = Math.random() > 0.12;
-    const ping = isOnline ? Math.floor(Math.random() * 110) + 70 : 0;
-    const http = isOnline ? 200 : 503;
-    const uptime = isOnline
-      ? Number((99 + Math.random()).toFixed(2))
-      : Number((95 + Math.random() * 3).toFixed(2));
-    const visitorsToday = site.visitorsToday + Math.floor(Math.random() * 80);
-
-    return {
-      ...site,
-      status: isOnline ? "online" : "offline",
-      ping,
-      http,
-      uptime,
-      visitorsToday,
-      lastCheck: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
-      downtime: isOnline ? "Sem nova queda detectada" : "Falha detectada nesta última checagem"
-    };
-  });
-
-  dashboardData.alerts.unshift({
-    type: "warning",
-    title: "Painel atualizado manualmente",
-    desc: "Os dados de status e resposta foram recalculados visualmente.",
-    time: "Agora"
-  });
-
-  dashboardData.alerts = dashboardData.alerts.slice(0, 5);
-
-  dashboardData.updates.unshift({
-    title: "Atualização de monitoramento executada",
-    desc: "Novos dados renderizados no dashboard.",
-    time: "Agora"
-  });
-
-  dashboardData.updates = dashboardData.updates.slice(0, 5);
-
-  dashboardData.systemLogs.unshift(`[${new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}] INFO DASHBOARD ATUALIZADO`);
-  dashboardData.systemLogs = dashboardData.systemLogs.slice(0, 12);
-}
-
-function setupAutomation() {
-  document.querySelectorAll(".automation-toggle").forEach(toggle => {
-    toggle.addEventListener("change", () => {
-      automationState[toggle.dataset.key] = toggle.checked;
-      localStorage.setItem("ztr_automation", JSON.stringify(automationState));
-      renderAutomation();
-    });
-  });
-}
-
-function setupSimulatedFailure() {
-  const btn = document.getElementById("simulateFailureBtn");
-  btn.addEventListener("click", () => {
-    const target = dashboardData.sites[0];
-    target.status = "offline";
-    target.ping = 0;
-    target.http = 503;
-    target.lastCheck = new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-    target.downtime = "Queda simulada manualmente pelo painel";
-
-    dashboardData.alerts.unshift({
-      type: "danger",
-      title: `${target.name} offline`,
-      desc: "Falha simulada com alerta visual acionado.",
-      time: "Agora"
+  try {
+    const response = await fetch("https://api.uptimerobot.com/v2/getMonitors", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+        api_key: UPTIMEROBOT_API_KEY,
+        format: "json",
+        logs: "1",
+        response_times: "1",
+        response_times_average: "30",
+        all_time_uptime_ratio: "1"
+      })
     });
 
-    dashboardData.systemLogs.unshift(`[${new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}] ERROR SITE OFFLINE ${target.name}`);
-    rerenderAll();
-    switchSection("monitoramento");
-  });
+    const data = await response.json();
+
+    if (!data.monitors) {
+      throw new Error("Resposta inválida da API");
+    }
+
+    renderUptimeData(data.monitors);
+  } catch (error) {
+    console.error(error);
+    renderApiError("Erro ao carregar monitoramento real.");
+  }
 }
 
-function rerenderAll() {
-  renderDashboard();
-  renderMonitoring();
-  renderAnalytics();
-  renderSecurity();
-  renderLogs();
-  renderProjects();
-  renderEvents();
-  renderAutomation();
-  renderCharts();
+function renderMissingApiKey() {
+  const html = `
+    <div class="event-item">
+      <strong>API Key não configurada</strong>
+      <div>Edite o arquivo <code>app.js</code> e coloque sua chave do UptimeRobot.</div>
+    </div>
+  `;
+
+  document.getElementById("siteList").innerHTML = html;
+  document.getElementById("monitorTable").innerHTML = `
+    <tr><td colspan="5">Configure a API Key do UptimeRobot para ver dados reais.</td></tr>
+  `;
 }
 
-function setupSidebarToggle() {
-  menuToggle.addEventListener("click", () => {
-    sidebar.classList.toggle("open");
-  });
+function renderApiError(message) {
+  document.getElementById("siteList").innerHTML = `
+    <div class="event-item">
+      <strong>Falha</strong>
+      <div>${message}</div>
+    </div>
+  `;
+  document.getElementById("monitorTable").innerHTML = `
+    <tr><td colspan="5">${message}</td></tr>
+  `;
 }
 
-function init() {
-  setupNavigation();
-  setupRefresh();
-  setupSidebarToggle();
-  setupSimulatedFailure();
+function renderUptimeData(monitors) {
+  const online = monitors.filter(m => m.status === 2).length;
+  const offline = monitors.length - online;
+
+  const responseTimes = monitors
+    .map(m => Number(m.average_response_time || 0))
+    .filter(n => n > 0);
+
+  const uptimeRatios = monitors
+    .map(m => Number(m.all_time_uptime_ratio || 0))
+    .filter(n => !Number.isNaN(n));
+
+  document.getElementById("onlineCount").textContent = online;
+  document.getElementById("offlineCount").textContent = offline;
+  document.getElementById("avgResponse").textContent = responseTimes.length ? `${Math.round(avg(responseTimes))}ms` : "—";
+  document.getElementById("avgUptime").textContent = uptimeRatios.length ? `${avg(uptimeRatios).toFixed(2)}%` : "—";
+
+  document.getElementById("siteList").innerHTML = monitors.map(m => {
+    const status = getStatusInfo(m.status);
+    return `
+      <div class="site-item">
+        <div class="site-item-top">
+          <strong>${m.friendly_name}</strong>
+          <span class="status ${status.className}">${status.text}</span>
+        </div>
+        <div class="site-meta">
+          <span class="chip">⚡ ${m.average_response_time ? `${m.average_response_time}ms` : "—"}</span>
+          <span class="chip">🕒 ${m.all_time_uptime_ratio ? `${m.all_time_uptime_ratio}%` : "—"}</span>
+          <span class="chip">🔗 ${m.url || "—"}</span>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("monitorTable").innerHTML = monitors.map(m => {
+    const status = getStatusInfo(m.status);
+    return `
+      <tr>
+        <td>${m.friendly_name}</td>
+        <td><span class="status ${status.className}">${status.text}</span></td>
+        <td>${m.type === 1 ? "HTTP(s)" : m.type}</td>
+        <td>${m.average_response_time ? `${m.average_response_time}ms` : "—"}</td>
+        <td>${m.all_time_uptime_ratio ? `${m.all_time_uptime_ratio}%` : "—"}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+// ===== Segurança real =====
+// Observação: dependendo do plano/limite/CORS da API usada, pode ser necessário proxy/serverless.
+async function loadSecurityData() {
+  const container = document.getElementById("securityList");
+  container.innerHTML = "";
+
+  for (const domain of SECURITY_DOMAINS) {
+    const card = document.createElement("div");
+    card.className = "site-item";
+    card.innerHTML = `
+      <div class="site-item-top">
+        <strong>${domain}</strong>
+        <span class="chip">Carregando...</span>
+      </div>
+    `;
+    container.appendChild(card);
+
+    try {
+      const response = await fetch(`https://api.securityheaders.com/?q=${encodeURIComponent(domain)}&followRedirects=on`);
+      const data = await response.json();
+
+      const grade = data.grade || "—";
+      const https = data.headers && data.headers["strict-transport-security"] ? "Ativo" : "Não detectado";
+
+      card.innerHTML = `
+        <div class="site-item-top">
+          <strong>${domain}</strong>
+          <span class="chip">Nota ${grade}</span>
+        </div>
+        <div class="site-meta">
+          <span class="chip">SSL/HSTS: ${https}</span>
+          <span class="chip">Referrer-Policy: ${data.headers?.["referrer-policy"] ? "OK" : "Ausente"}</span>
+          <span class="chip">CSP: ${data.headers?.["content-security-policy"] ? "OK" : "Ausente"}</span>
+        </div>
+      `;
+    } catch (error) {
+      card.innerHTML = `
+        <div class="site-item-top">
+          <strong>${domain}</strong>
+          <span class="chip">Falha</span>
+        </div>
+        <div class="site-meta">
+          <span class="chip">Essa checagem pode precisar de proxy/backend.</span>
+        </div>
+      `;
+    }
+  }
+}
+
+// ===== Init =====
+refreshBtn.addEventListener("click", async () => {
+  await loadUptimeRobotData();
+  await loadSecurityData();
+});
+
+window.addEventListener("load", async () => {
   startClock();
-  rerenderAll();
-  setupAutomation();
-}
-
-window.addEventListener("resize", renderCharts);
-window.addEventListener("load", init);
+  await loadUptimeRobotData();
+  await loadSecurityData();
+});
