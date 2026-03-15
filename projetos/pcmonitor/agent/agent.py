@@ -93,7 +93,7 @@ def send_metrics(payload):
         'Authorization': f'Bearer {AGENT_TOKEN}',
         'Content-Type': 'application/json'
     }
-    response = requests.post(SERVER_URL, json=payload, headers=headers, timeout=10)
+    response = requests.post(SERVER_URL, json=payload, headers=headers, timeout=3)
     response.raise_for_status()
 
 
