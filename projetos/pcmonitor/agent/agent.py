@@ -8,7 +8,7 @@ from datetime import datetime
 
 SERVER_URL = os.getenv('SERVER_URL', 'https://server-juliontb.onrender.com/api/agent/metrics')
 AGENT_TOKEN = os.getenv('AGENT_TOKEN', 'ztr-14121981')
-INTERVAL_SECONDS = int(os.getenv('INTERVAL_SECONDS', '5'))
+INTERVAL_SECONDS = int(os.getenv('INTERVAL_SECONDS', '2'))
 
 
 def get_local_ip():
@@ -93,7 +93,7 @@ def send_metrics(payload):
         'Authorization': f'Bearer {AGENT_TOKEN}',
         'Content-Type': 'application/json'
     }
-    response = requests.post(SERVER_URL, json=payload, headers=headers, timeout=3)
+    response = requests.post(SERVER_URL, json=payload, headers=headers, timeout=10)
     response.raise_for_status()
 
 
