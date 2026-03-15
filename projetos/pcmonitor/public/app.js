@@ -1,4 +1,5 @@
-const socket = io();
+const API_BASE_URL = 'https://server-juliontb.onrender.com';
+const socket = io(API_BASE_URL);
 
 const elements = {
   agentStatus: document.getElementById('agentStatus'),
