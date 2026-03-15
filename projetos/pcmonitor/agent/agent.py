@@ -105,7 +105,7 @@ if __name__ == '__main__':
         try:
             payload = build_payload()
             send_metrics(payload)
-            print(f"[{datetime.now().strftime('%H:%M:%S')}] Métricas enviadas com sucesso.")
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Métricas enviadass com sucesso.")
         except Exception as error:
             print(f'Erro ao enviar métricas: {error}')
 
