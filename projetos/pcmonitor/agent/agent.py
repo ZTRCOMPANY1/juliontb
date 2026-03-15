@@ -6,7 +6,7 @@ import requests
 import psutil
 from datetime import datetime
 
-SERVER_URL = os.getenv('SERVER_URL', 'http://192.168.1.107/api/agent/metrics')
+SERVER_URL = os.getenv('SERVER_URL', 'https://server-juliontb.onrender.com/api/agent/metrics')
 AGENT_TOKEN = os.getenv('AGENT_TOKEN', 'ztr-14121981')
 INTERVAL_SECONDS = int(os.getenv('INTERVAL_SECONDS', '5'))
 
