@@ -21,7 +21,7 @@ def load_config():
 
 
 CONFIG = load_config()
-SERVER_URL = CONFIG.get("server_url", "http://localhost:3000/api/agent/metrics")
+SERVER_URL = CONFIG.get("server_url", "https://server-pcmonitor.onrender.com/api/agent/metrics")
 TOKEN = CONFIG.get("token", "ztr280520")
 INTERVAL_SECONDS = int(CONFIG.get("interval_seconds", 5))
 WATCH_PROCESSES = CONFIG.get("watch_processes", [])
