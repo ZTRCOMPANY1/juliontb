@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - GamerProfile</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="card form-box">
+      <h2>Criar conta</h2>
+      <input id="registerUsername" class="input" placeholder="Nome de usuário">
+      <input id="registerPassword" class="input" type="password" placeholder="Senha">
+      <input id="registerAvatar" class="input" placeholder="URL do avatar (opcional)">
+      <button class="btn" onclick="register()">Criar conta</button>
+      <div id="registerMessage" class="message"></div>
+    </div>
+
+    <div class="card form-box">
+      <h2>Entrar</h2>
+      <input id="loginUsername" class="input" placeholder="Nome de usuário">
+      <input id="loginPassword" class="input" type="password" placeholder="Senha">
+      <button class="btn" onclick="login()">Entrar</button>
+      <div id="loginMessage" class="message"></div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
