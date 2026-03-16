@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://SEU-BACKEND.onrender.com";
+const API_BASE_URL = "https://server-pcmonitor.onrender.com";
 
 const form = document.getElementById("loginForm");
 const errorBox = document.getElementById("loginError");
