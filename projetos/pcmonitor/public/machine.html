@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalhes da máquina</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <h1 id="machineTitle">Máquina</h1>
+      <p id="machineSubtitle">Detalhes</p>
+    </div>
+    <div class="topbar-actions">
+      <a class="btn-link" href="index.html">Voltar</a>
+      <button id="themeToggle">Tema</button>
+      <button id="logoutBtn">Sair</button>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <div class="toolbar">
+      <select id="rangeSelect">
+        <option value="hour">Última hora</option>
+        <option value="day" selected>Último dia</option>
+        <option value="week">Última semana</option>
+      </select>
+
+      <input id="eventSearch" placeholder="Buscar evento..." />
+      <button id="reloadBtn">Atualizar</button>
+      <a id="jsonExport" class="btn-link" href="#">Export JSON</a>
+      <a id="csvExport" class="btn-link" href="#">Export CSV</a>
+    </div>
+
+    <div id="summaryGrid" class="summary-grid"></div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head">
+          <h2>Partições</h2>
+        </div>
+        <div id="partitionsList"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Processos pesados</h2>
+        </div>
+        <div id="processList"></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head">
+          <h2>Histórico</h2>
+        </div>
+        <div id="historyList"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Eventos</h2>
+        </div>
+        <div id="eventsList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="machine.js"></script>
+</body>
+</html>
