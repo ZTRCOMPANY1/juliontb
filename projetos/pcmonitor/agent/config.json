@@ -1,7 +1,7 @@
 {
   "machine_name": "PC Principal",
   "machine_id": "pc-principal-01",
-  "server_url": "http://localhost:3000/api/agent/metrics",
+  "server_url": "https://SEU-BACKEND.onrender.com/api/agent/metrics",
   "token": "ztr280520",
   "interval_seconds": 5,
   "watch_processes": ["chrome.exe", "discord.exe", "steam.exe"],
