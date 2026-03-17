@@ -21,7 +21,7 @@ function setStoredUser(user) {
 
 function logout() {
   localStorage.removeItem("linkHubUser");
-  location.href = "/login.html";
+  location.href = "/projetos/SAAS/saaslinktree/public/login.html";
 }
 
 function setThemeColor(color) {
@@ -357,7 +357,7 @@ function copyPublicLink() {
 function loadDashboard() {
   const user = getStoredUser();
   if (!user) {
-    location.href = "/login.html";
+    location.href = "/projetos/SAAS/saaslinktree/public/login.html";
     return;
   }
 
@@ -619,20 +619,20 @@ function bootAdmin() {
   }
 }
 
-if (location.pathname.endsWith("/dashboard.html")) {
+if (location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/dashboard.html")) {
   loadDashboard();
 }
 
-if (location.pathname.endsWith("/admin.html")) {
+if (location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/admin.html")) {
   bootAdmin();
 }
 
 if (
-  location.pathname.endsWith("/user.html") ||
+  location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/user.html") ||
   (
-    !location.pathname.endsWith("/login.html") &&
-    !location.pathname.endsWith("/dashboard.html") &&
-    !location.pathname.endsWith("/admin.html")
+    !location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/login.html") &&
+    !location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/dashboard.html") &&
+    !location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/admin.html")
   )
 ) {
   loadPublicProfile();
