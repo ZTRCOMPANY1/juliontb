@@ -21,7 +21,7 @@ function setStoredUser(user) {
 
 function logout() {
   localStorage.removeItem("linkHubUser");
-  location.href = "/projetos/SAAS/saaslinktree/public/login.html";
+  location.href = "/linkhub/public/login.html";
 }
 
 function setThemeColor(color) {
@@ -81,7 +81,7 @@ async function login() {
 
     if (res.ok && data.user) {
       setStoredUser(data.user);
-      location.href = "/projetos/SAAS/saaslinktree/public/dashboard.html";
+      location.href = "/linkhub/public/dashboard.html";
     }
   } catch (err) {
     console.error(err);
@@ -224,7 +224,7 @@ function buildPrettyPublicLink(user) {
   if (user.customDomain) {
     return `https://${user.customDomain}`;
   }
-  return `https://juliontb.site/projetos/SAAS/saaslinktree/public/user.html?slug=${encodeURIComponent(user.slug)}`;
+  return `https://juliontb.site/linkhub/public/user.html?slug=${encodeURIComponent(user.slug)}`;
 }
 
 function renderPreview(user) {
@@ -357,7 +357,7 @@ function copyPublicLink() {
 function loadDashboard() {
   const user = getStoredUser();
   if (!user) {
-    location.href = "/projetos/SAAS/saaslinktree/public/login.html";
+    location.href = "/linkhub/public/login.html";
     return;
   }
 
@@ -619,20 +619,20 @@ function bootAdmin() {
   }
 }
 
-if (location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/dashboard.html")) {
+if (location.pathname.endsWith("/linkhub/public/dashboard.html")) {
   loadDashboard();
 }
 
-if (location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/admin.html")) {
+if (location.pathname.endsWith("/linkhub/public/admin.html")) {
   bootAdmin();
 }
 
 if (
-  location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/user.html") ||
+  location.pathname.endsWith("/linkhub/public/user.html") ||
   (
-    !location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/login.html") &&
-    !location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/dashboard.html") &&
-    !location.pathname.endsWith("/projetos/SAAS/saaslinktree/public/admin.html")
+    !location.pathname.endsWith("/linkhub/public/login.html") &&
+    !location.pathname.endsWith("/linkhub/public/dashboard.html") &&
+    !location.pathname.endsWith("/linkhub/public/admin.html")
   )
 ) {
   loadPublicProfile();
