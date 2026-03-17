@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=/user.html">
+  <script>
+    (function () {
+      var path = window.location.pathname.replace(/^\/+/, "");
+      if (path && !path.includes(".")) {
+        window.location.replace("/user.html?slug=" + encodeURIComponent(path));
+      } else {
+        window.location.replace("/");
+      }
+    })();
+  </script>
+  <title>Redirecionando...</title>
+</head>
+<body>
+  Redirecionando...
+</body>
+</html>
