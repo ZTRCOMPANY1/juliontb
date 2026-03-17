@@ -81,7 +81,7 @@ async function login() {
 
     if (res.ok && data.user) {
       setStoredUser(data.user);
-      location.href = "dashboard.html";
+      location.href = "/projetos/SAAS/saaslinktree/public/dashboard.html";
     }
   } catch (err) {
     console.error(err);
