@@ -81,7 +81,7 @@ async function login() {
 
     if (res.ok && data.user) {
       setStoredUser(data.user);
-      location.href = "/dashboard.html";
+      location.href = "dashboard.html";
     }
   } catch (err) {
     console.error(err);
@@ -224,7 +224,7 @@ function buildPrettyPublicLink(user) {
   if (user.customDomain) {
     return `https://${user.customDomain}`;
   }
-  return `https://juliontb.site/user.html?slug=${encodeURIComponent(user.slug)}`;
+  return `https://juliontb.site/projetos/SAAS/saaslinktree/public/user.html?slug=${encodeURIComponent(user.slug)}`;
 }
 
 function renderPreview(user) {
