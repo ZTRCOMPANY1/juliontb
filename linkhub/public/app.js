@@ -68,7 +68,7 @@ async function login() {
   const message = document.getElementById("loginMessage");
 
   try {
-    const res = await fetch(`${API_BASE}/api/login`, {
+    const res = await fetch(`${API_BASE}/api/login.html`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
