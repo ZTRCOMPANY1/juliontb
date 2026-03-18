@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecionando...</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #09090f;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 24px;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    p {
+      color: #c9d1e8;
+      line-height: 1.6;
+    }
+
+    a {
+      color: #a78bfa;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Redirecionando...</h1>
+    <p id="status">Buscando destino do link curto.</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "SUA_API_KEY",
+      authDomain: "SEU_PROJETO.firebaseapp.com",
+      projectId: "SEU_PROJECT_ID",
+      storageBucket: "SEU_PROJETO.firebasestorage.app",
+      messagingSenderId: "SEU_MESSAGING_SENDER_ID",
+      appId: "SEU_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const statusEl = document.getElementById("status");
+
+    function getSlugFromPath() {
+      const parts = window.location.pathname.split("/").filter(Boolean);
+      const encurtadorIndex = parts.indexOf("encurtador");
+
+      if (encurtadorIndex === -1) return null;
+      return parts[encurtadorIndex + 1] || null;
+    }
+
+    async function redirectBySlug() {
+      const slug = getSlugFromPath();
+
+      if (!slug) {
+        statusEl.innerHTML = `
+          Link não encontrado.<br><br>
+          <a href="./index.html">Voltar ao encurtador</a>
+        `;
+        return;
+      }
+
+      try {
+        const ref = doc(db, "short_links", slug);
+        const snap = await getDoc(ref);
+
+        if (!snap.exists()) {
+          statusEl.innerHTML = `
+            Esse link curto não existe.<br><br>
+            <a href="./index.html">Voltar ao encurtador</a>
+          `;
+          return;
+        }
+
+        const data = snap.data();
+
+        await updateDoc(ref, {
+          clicks: (data.clicks || 0) + 1,
+          lastClick: new Date().toISOString()
+        });
+
+        statusEl.textContent = "Destino encontrado. Redirecionando agora...";
+        window.location.replace(data.url);
+      } catch (error) {
+        console.error(error);
+        statusEl.innerHTML = `
+          Ocorreu um erro ao redirecionar.<br><br>
+          <a href="./index.html">Voltar ao encurtador</a>
+        `;
+      }
+    }
+
+    redirectBySlug();
+  </script>
+</body>
+</html>
