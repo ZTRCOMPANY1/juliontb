@@ -224,7 +224,7 @@ function buildPrettyPublicLink(user) {
   if (user.customDomain) {
     return `https://${user.customDomain}`;
   }
-  return `https://juliontb.site/linkhub/user.html?slug=${encodeURIComponent(user.slug)}`;
+  return `https://juliontb.site/linkhub/user/${encodeURIComponent(user.slug)}`;
 }
 
 function renderPreview(user) {
