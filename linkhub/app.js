@@ -68,7 +68,7 @@ async function login() {
   const message = document.getElementById("loginMessage");
 
   try {
-    const res = await fetch(`${API_BASE}/api/login.html`, {
+    const res = await fetch(`${API_BASE}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -224,7 +224,7 @@ function buildPrettyPublicLink(user) {
   if (user.customDomain) {
     return `https://${user.customDomain}`;
   }
-  return `https://juliontb.site/linkhub/user/${encodeURIComponent(user.slug)}`;
+  return `https://juliontb.site/linkhub/user.html?slug=${encodeURIComponent(user.slug)}`;
 }
 
 function renderPreview(user) {
