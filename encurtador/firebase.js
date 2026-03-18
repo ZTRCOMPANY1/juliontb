@@ -15,12 +15,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJECT_ID",
-  storageBucket: "SEU_PROJETO.firebasestorage.app",
-  messagingSenderId: "SEU_MESSAGING_SENDER_ID",
-  appId: "SEU_APP_ID"
+  apiKey: "AIzaSyD-Oiz4RXEY4yW6_A3xuLOmsv3mw3urZDU",
+  authDomain: "encurta-67ddd.firebaseapp.com",
+  projectId: "encurta-67ddd",
+  storageBucket: "encurta-67ddd.firebasestorage.app",
+  messagingSenderId: "497432750979",
+  appId: "1:497432750979:web:5454503ebdbf6ac30424b6"
 };
 
 const app = initializeApp(firebaseConfig);
