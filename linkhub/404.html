@@ -9,7 +9,7 @@
 
       if (path.length >= 3 && path[0] === "linkhub" && path[1] === "user") {
         const slug = path[2];
-        window.location.replace("/linkhub/user.html?slug=" + encodeURIComponent(slug));
+        window.location.replace("/linkhub/user/" + encodeURIComponent(slug));
         return;
       }
 
