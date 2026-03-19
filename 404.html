@@ -26,9 +26,18 @@
       width: 100%;
     }
 
-    h1 { margin-top: 0; }
-    p { color: #c9d1e8; line-height: 1.6; }
-    a { color: #a78bfa; }
+    h1 {
+      margin-top: 0;
+    }
+
+    p {
+      color: #c9d1e8;
+      line-height: 1.6;
+    }
+
+    a {
+      color: #a78bfa;
+    }
   </style>
 </head>
 <body>
@@ -42,27 +51,8 @@
     import {
       getFirestore,
       doc,
-      getDoc,
-      updateDoc
+      getDoc
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const statusEl = document.getElementById("status");
-    const path = window.location.pathname;
-    const parts = path.split("/").filter(Boolean);
-
-    function go(url) {
-      window.location.replace(url);
-    }
-
-    async function handleRoute() {
-      if (!parts.length) {
-        statusEl.innerHTML = `Página não encontrada.<br><br><a href="/">Ir para início</a>`;
-        return;
-      }
-
-      const project = parts[0];
-
-      // 1) ENCURTADOR
 
     const firebaseConfig = {
       apiKey: "AIzaSyD-Oiz4RXEY4yW6_A3xuLOmsv3mw3urZDU",
@@ -75,25 +65,25 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const statusEl = document.getElementById("status");
 
-    function getSlugFromPath() {
-      const parts = window.location.pathname.split("/").filter(Boolean);
-      const encurtadorIndex = parts.indexOf("encurtador");
-
-      if (encurtadorIndex === -1) return null;
-      return parts[encurtadorIndex + 1] || null;
+    function go(url) {
+      window.location.replace(url);
     }
 
-    async function redirectBySlug() {
-      const slug = getSlugFromPath();
+    function getPathParts() {
+      return window.location.pathname.split("/").filter(Boolean);
+    }
+
+    async function handleEncurtador(parts) {
+      const slug = parts[1];
 
       if (!slug) {
-        statusEl.innerHTML = `
-          Link não encontrado.<br><br>
-          <a href="/encurtador/">Voltar ao encurtador</a>
-        `;
+        go("/encurtador/");
         return;
       }
+
+      statusEl.textContent = "Buscando link curto...";
 
       try {
         const ref = doc(db, "short_links", slug);
@@ -107,10 +97,18 @@
           return;
         }
 
-const data = snap.data();
+        const data = snap.data();
 
-statusEl.textContent = "Destino encontrado. Redirecionando agora...";
-window.location.replace(data.url);
+        if (!data.url) {
+          statusEl.innerHTML = `
+            Esse link está inválido.<br><br>
+            <a href="/encurtador/">Voltar ao encurtador</a>
+          `;
+          return;
+        }
+
+        statusEl.textContent = "Destino encontrado. Redirecionando agora...";
+        go(data.url);
       } catch (error) {
         console.error(error);
         statusEl.innerHTML = `
@@ -120,34 +118,65 @@ window.location.replace(data.url);
       }
     }
 
-    redirectBySlug();
-
-      // 2) LINKHUB
-    (function () {
-      const parts = window.location.pathname.split("/").filter(Boolean);
+    function handleLinkhub(parts) {
+      // /linkhub
+      if (parts.length === 1) {
+        go("/linkhub/");
+        return;
+      }
 
       // /linkhub/user/slug
-      if (parts.length >= 3 && parts[0] === "linkhub" && parts[1] === "user") {
+      if (parts.length >= 3 && parts[1] === "user") {
         const slug = parts[2];
-        window.location.replace("/linkhub/user.html?slug=" + encodeURIComponent(slug));
-      } else {
-        window.location.replace("/linkhub/");
+        go("/linkhub/user.html?slug=" + encodeURIComponent(slug));
+        return;
       }
-    })();
 
-      // 3) ALBUM
+      // qualquer outra rota do linkhub
+      go("/linkhub/");
+    }
+
+    function handleAlbum() {
+      go("/album/");
+    }
+
+    function handleDashboard() {
+      go("/dashboard/");
+    }
+
+    async function handleRoute() {
+      const parts = getPathParts();
+
+      if (!parts.length) {
+        statusEl.innerHTML = `
+          Página não encontrada.<br><br>
+          <a href="/">Ir para início</a>
+        `;
+        return;
+      }
+
+      const project = parts[0];
+
+      if (project === "encurtador") {
+        await handleEncurtador(parts);
+        return;
+      }
+
+      if (project === "linkhub") {
+        handleLinkhub(parts);
+        return;
+      }
+
       if (project === "album") {
-        go("/album/");
+        handleAlbum();
         return;
       }
 
-      // 4) DASHBOARD
       if (project === "dashboard") {
-        go("/dashboard/");
+        handleDashboard();
         return;
       }
 
-      // 5) FALLBACK GERAL
       statusEl.innerHTML = `
         Página não encontrada.<br><br>
         <a href="/">Ir para início</a>
