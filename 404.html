@@ -107,15 +107,10 @@
           return;
         }
 
-        const data = snap.data();
+const data = snap.data();
 
-        await updateDoc(ref, {
-          clicks: (data.clicks || 0) + 1,
-          lastClick: new Date().toISOString()
-        });
-
-        statusEl.textContent = "Destino encontrado. Redirecionando agora...";
-        window.location.replace(data.url);
+statusEl.textContent = "Destino encontrado. Redirecionando agora...";
+window.location.replace(data.url);
       } catch (error) {
         console.error(error);
         statusEl.innerHTML = `
