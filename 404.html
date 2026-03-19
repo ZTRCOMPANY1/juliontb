@@ -38,6 +38,14 @@
   </div>
 
   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
     const statusEl = document.getElementById("status");
     const path = window.location.pathname;
     const parts = path.split("/").filter(Boolean);
@@ -55,26 +63,18 @@
       const project = parts[0];
 
       // 1) ENCURTADOR
-          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getFirestore,
-      doc,
-      getDoc,
-      updateDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
-  apiKey: "AIzaSyD-Oiz4RXEY4yW6_A3xuLOmsv3mw3urZDU",
-  authDomain: "encurta-67ddd.firebaseapp.com",
-  projectId: "encurta-67ddd",
-  storageBucket: "encurta-67ddd.firebasestorage.app",
-  messagingSenderId: "497432750979",
-  appId: "1:497432750979:web:5454503ebdbf6ac30424b6"
+      apiKey: "AIzaSyD-Oiz4RXEY4yW6_A3xuLOmsv3mw3urZDU",
+      authDomain: "encurta-67ddd.firebaseapp.com",
+      projectId: "encurta-67ddd",
+      storageBucket: "encurta-67ddd.firebasestorage.app",
+      messagingSenderId: "497432750979",
+      appId: "1:497432750979:web:5454503ebdbf6ac30424b6"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const statusEl = document.getElementById("status");
 
     function getSlugFromPath() {
       const parts = window.location.pathname.split("/").filter(Boolean);
