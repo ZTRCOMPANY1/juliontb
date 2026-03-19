@@ -1,5 +1,8 @@
 import {
+  auth,
   db,
+  onAuthStateChanged,
+  signOut,
   collection,
   doc,
   getDoc,
@@ -7,6 +10,7 @@ import {
   setDoc,
   deleteDoc,
   query,
+  where,
   orderBy
 } from "./firebase.js";
 
@@ -23,22 +27,15 @@ const qrcodeContainer = document.getElementById("qrcode");
 const linksTableBody = document.getElementById("linksTableBody");
 const refreshBtn = document.getElementById("refreshBtn");
 const searchInput = document.getElementById("searchInput");
+const logoutBtn = document.getElementById("logoutBtn");
+const userEmail = document.getElementById("userEmail");
 
-const linksCollection = collection(db, "short_links");
+let currentUser = null;
 let allLinks = [];
 let currentShortUrl = "";
 
 function getBaseShortenerUrl() {
-  const origin = window.location.origin;
-  const pathParts = window.location.pathname.split("/").filter(Boolean);
-
-  const encurtadorIndex = pathParts.indexOf("encurtador");
-
-  if (encurtadorIndex !== -1) {
-    return `${origin}/${pathParts.slice(0, encurtadorIndex + 1).join("/")}`;
-  }
-
-  return origin;
+  return `${window.location.origin}/encurtador`;
 }
 
 function isValidUrl(value) {
@@ -78,6 +75,7 @@ async function generateUniqueSlug() {
   while (exists) {
     const ref = doc(db, "short_links", slug);
     const snap = await getDoc(ref);
+
     if (!snap.exists()) {
       exists = false;
     } else {
@@ -134,54 +132,6 @@ function downloadQrCode() {
   link.click();
 }
 
-async function createShortLink() {
-  hideMessage();
-
-  const originalUrl = originalUrlInput.value.trim();
-  let customSlug = sanitizeSlug(customSlugInput.value);
-
-  if (!originalUrl) {
-    showMessage("Digite a URL original.", "error");
-    return;
-  }
-
-  if (!isValidUrl(originalUrl)) {
-    showMessage("Digite uma URL válida começando com http:// ou https://", "error");
-    return;
-  }
-
-  let slug = customSlug;
-
-  if (slug) {
-    const existingSlugRef = doc(db, "short_links", slug);
-    const existingSlugSnap = await getDoc(existingSlugRef);
-
-    if (existingSlugSnap.exists()) {
-      showMessage("Esse slug já existe. Escolha outro.", "error");
-      return;
-    }
-  } else {
-    slug = await generateUniqueSlug();
-  }
-
-  const shortLinkRef = doc(db, "short_links", slug);
-
-  const payload = {
-    slug,
-    url: originalUrl,
-    clicks: 0,
-    createdAt: new Date().toISOString(),
-    lastClick: null
-  };
-
-  await setDoc(shortLinkRef, payload);
-
-  const shortUrl = `${getBaseShortenerUrl()}/${slug}`;
-  showResult(shortUrl);
-  showMessage("Link encurtado criado com sucesso.");
-  await loadLinks();
-}
-
 function formatDate(value) {
   if (!value) return "—";
 
@@ -202,6 +152,7 @@ function escapeHtml(str = "") {
 
 function getFilteredLinks() {
   const term = searchInput.value.trim().toLowerCase();
+
   if (!term) return allLinks;
 
   return allLinks.filter((item) => {
@@ -249,13 +200,21 @@ function renderLinksTable() {
 }
 
 async function loadLinks() {
+  if (!currentUser) return;
+
   linksTableBody.innerHTML = `
     <tr>
       <td colspan="6" class="empty-state">Carregando links...</td>
     </tr>
   `;
 
-  const q = query(linksCollection, orderBy("createdAt", "desc"));
+  const linksRef = collection(db, "short_links");
+  const q = query(
+    linksRef,
+    where("ownerUid", "==", currentUser.uid),
+    orderBy("createdAt", "desc")
+  );
+
   const snapshot = await getDocs(q);
 
   allLinks = snapshot.docs.map((docItem) => ({
@@ -264,6 +223,61 @@ async function loadLinks() {
   }));
 
   renderLinksTable();
+}
+
+async function createShortLink() {
+  hideMessage();
+
+  const originalUrl = originalUrlInput.value.trim();
+  let customSlug = sanitizeSlug(customSlugInput.value);
+
+  if (!currentUser) {
+    showMessage("Você precisa estar logado.", "error");
+    return;
+  }
+
+  if (!originalUrl) {
+    showMessage("Digite a URL original.", "error");
+    return;
+  }
+
+  if (!isValidUrl(originalUrl)) {
+    showMessage("Digite uma URL válida começando com http:// ou https://", "error");
+    return;
+  }
+
+  let slug = customSlug;
+
+  if (slug) {
+    const existingSlugRef = doc(db, "short_links", slug);
+    const existingSlugSnap = await getDoc(existingSlugRef);
+
+    if (existingSlugSnap.exists()) {
+      showMessage("Esse slug já existe. Escolha outro.", "error");
+      return;
+    }
+  } else {
+    slug = await generateUniqueSlug();
+  }
+
+  const shortLinkRef = doc(db, "short_links", slug);
+
+  const payload = {
+    slug,
+    url: originalUrl,
+    ownerUid: currentUser.uid,
+    ownerEmail: currentUser.email || "",
+    clicks: 0,
+    createdAt: new Date().toISOString(),
+    lastClick: null
+  };
+
+  await setDoc(shortLinkRef, payload);
+
+  const shortUrl = `${getBaseShortenerUrl()}/${slug}`;
+  showResult(shortUrl);
+  showMessage("Link encurtado criado com sucesso.");
+  await loadLinks();
 }
 
 async function deleteLink(slug) {
@@ -322,4 +336,18 @@ linksTableBody.addEventListener("click", async (event) => {
   }
 });
 
-loadLinks();
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "./login.html";
+});
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "./login.html";
+    return;
+  }
+
+  currentUser = user;
+  userEmail.textContent = user.email || "Usuário logado";
+  await loadLinks();
+});

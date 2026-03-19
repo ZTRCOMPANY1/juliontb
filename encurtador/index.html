@@ -11,13 +11,18 @@
   <div class="bg-glow bg-glow-2"></div>
 
   <main class="container">
-    <header class="hero">
+    <header class="hero top-bar">
       <div>
         <p class="eyebrow">juliontb.site</p>
         <h1>Encurtador de Links</h1>
         <p class="subtitle">
-          Crie links curtos, veja estatísticas de cliques e gere QR code automaticamente.
+          Seus links ficam privados na sua conta. Só você vê o que criou.
         </p>
+      </div>
+
+      <div class="user-panel">
+        <p id="userEmail" class="user-email">Carregando...</p>
+        <button id="logoutBtn" class="btn ghost">Sair</button>
       </div>
     </header>
 
@@ -75,7 +80,7 @@
 
     <section class="card">
       <div class="card-head">
-        <h2>Seus links</h2>
+        <h2>Meus links</h2>
         <button id="refreshBtn" class="btn ghost">Atualizar</button>
       </div>
 

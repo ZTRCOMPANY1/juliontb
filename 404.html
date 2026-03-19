@@ -55,61 +55,77 @@
       const project = parts[0];
 
       // 1) ENCURTADOR
-      if (project === "encurtador") {
-        const slug = parts[1];
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        if (!slug) {
-          go("/encurtador/");
-          return;
-        }
+    const firebaseConfig = {
+  apiKey: "AIzaSyD-Oiz4RXEY4yW6_A3xuLOmsv3mw3urZDU",
+  authDomain: "encurta-67ddd.firebaseapp.com",
+  projectId: "encurta-67ddd",
+  storageBucket: "encurta-67ddd.firebasestorage.app",
+  messagingSenderId: "497432750979",
+  appId: "1:497432750979:web:5454503ebdbf6ac30424b6"
+    };
 
-        statusEl.textContent = "Buscando link curto...";
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const statusEl = document.getElementById("status");
 
-        try {
-          const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
-          const { getFirestore, doc, getDoc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+    function getSlugFromPath() {
+      const parts = window.location.pathname.split("/").filter(Boolean);
+      const encurtadorIndex = parts.indexOf("encurtador");
 
-          const firebaseConfig = {
-      apiKey: "AIzaSyD-Oiz4RXEY4yW6_A3xuLOmsv3mw3urZDU",
-      authDomain: "encurta-67ddd.firebaseapp.com",
-      projectId: "encurta-67ddd",
-      storageBucket: "encurta-67ddd.firebasestorage.app",
-      messagingSenderId: "497432750979",
-      appId: "1:497432750979:web:5454503ebdbf6ac30424b6"
-          };
+      if (encurtadorIndex === -1) return null;
+      return parts[encurtadorIndex + 1] || null;
+    }
 
-          const app = initializeApp(firebaseConfig);
-          const db = getFirestore(app);
+    async function redirectBySlug() {
+      const slug = getSlugFromPath();
 
-          const ref = doc(db, "short_links", slug);
-          const snap = await getDoc(ref);
+      if (!slug) {
+        statusEl.innerHTML = `
+          Link não encontrado.<br><br>
+          <a href="/encurtador/">Voltar ao encurtador</a>
+        `;
+        return;
+      }
 
-          if (!snap.exists()) {
-            statusEl.innerHTML = `
-              Link curto não existe.<br><br>
-              <a href="/encurtador/">Voltar ao encurtador</a>
-            `;
-            return;
-          }
+      try {
+        const ref = doc(db, "short_links", slug);
+        const snap = await getDoc(ref);
 
-          const data = snap.data();
-
-          await updateDoc(ref, {
-            clicks: (data.clicks || 0) + 1,
-            lastClick: new Date().toISOString()
-          });
-
-          go(data.url);
-          return;
-        } catch (err) {
-          console.error(err);
+        if (!snap.exists()) {
           statusEl.innerHTML = `
-            Erro ao abrir link curto.<br><br>
+            Esse link curto não existe.<br><br>
             <a href="/encurtador/">Voltar ao encurtador</a>
           `;
           return;
         }
+
+        const data = snap.data();
+
+        await updateDoc(ref, {
+          clicks: (data.clicks || 0) + 1,
+          lastClick: new Date().toISOString()
+        });
+
+        statusEl.textContent = "Destino encontrado. Redirecionando agora...";
+        window.location.replace(data.url);
+      } catch (error) {
+        console.error(error);
+        statusEl.innerHTML = `
+          Ocorreu um erro ao redirecionar.<br><br>
+          <a href="/encurtador/">Voltar ao encurtador</a>
+        `;
       }
+    }
+
+    redirectBySlug();
 
       // 2) LINKHUB
     (function () {

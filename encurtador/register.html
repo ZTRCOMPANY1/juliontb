@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro - Encurtador</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="auth-page">
+    <section class="auth-card">
+      <p class="eyebrow">juliontb.site</p>
+      <h1>Criar conta</h1>
+      <p class="auth-subtitle">Crie sua conta para salvar e gerenciar seus próprios links.</p>
+
+      <div class="field">
+        <label for="registerEmail">E-mail</label>
+        <input id="registerEmail" type="email" placeholder="seuemail@gmail.com" />
+      </div>
+
+      <div class="field">
+        <label for="registerPassword">Senha</label>
+        <input id="registerPassword" type="password" placeholder="Mínimo 6 caracteres" />
+      </div>
+
+      <button id="registerBtn" class="btn primary">Criar conta</button>
+
+      <div id="authMessage" class="message hidden"></div>
+
+      <p class="auth-switch">
+        Já tem conta?
+        <a href="./login.html">Entrar</a>
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="./auth.js"></script>
+</body>
+</html>
