@@ -338,12 +338,12 @@ linksTableBody.addEventListener("click", async (event) => {
 
 logoutBtn.addEventListener("click", async () => {
   await signOut(auth);
-  window.location.href = "/login/";
+  window.location.href = "/login/index.html";
 });
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    window.location.href = "/login/";
+    window.location.href = "/login/index.html";
     return;
   }
 
