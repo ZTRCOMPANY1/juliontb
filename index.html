@@ -24,7 +24,7 @@ body {
 </style>
 
 <script>
-// 🚫 Bloquear F12 / inspecionar (não é seguro)
+// 🚫 Bloquear F12 (básico)
 document.addEventListener('keydown', function(e) {
   if (e.key === "F12") e.preventDefault();
   if (e.ctrlKey && e.shiftKey && e.key === "I") e.preventDefault();
@@ -34,20 +34,26 @@ document.addEventListener('keydown', function(e) {
 // 🚫 bloquear clique direito
 document.addEventListener('contextmenu', e => e.preventDefault());
 
-// função login
+// LOGIN
 async function login() {
   const senhaInput = document.getElementById("senha").value;
 
-  const res = await fetch("https://github.com/ZTRCOMPANY1/codigoacessojuliontb/auth.json");
-  const data = await res.json();
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/ZTRCOMPANY1/codigoacessojuliontb/main/auth.json");
+    const data = await res.json();
 
-  if (senhaInput === data.password) {
-    document.body.innerHTML = `
-      <h1>Acesso liberado</h1>
-      <a href="https://link.juliontb.site">link.juliontb.site</a>
-    `;
-  } else {
-    alert("Senha incorreta");
+    if (senhaInput === data.password) {
+      document.body.innerHTML = `
+        <h1>Acesso liberado</h1>
+        <a href="https://link.juliontb.site">link.juliontb.site</a>
+      `;
+    } else {
+      alert("Senha incorreta");
+    }
+
+  } catch (erro) {
+    alert("Erro ao conectar com o servidor");
+    console.error(erro);
   }
 }
 </script>
