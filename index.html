@@ -38,7 +38,7 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 async function login() {
   const senhaInput = document.getElementById("senha").value;
 
-  const res = await fetch("https://github.com/ZTRCOMPANY1/codigoacessojuliontb/blob/main/auth.json");
+  const res = await fetch("https://github.com/ZTRCOMPANY1/codigoacessojuliontb/auth.json");
   const data = await res.json();
 
   if (senhaInput === data.password) {
