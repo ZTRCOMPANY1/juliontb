@@ -1,72 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rede de Subdomínios</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: #e2e8f0;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+<meta charset="UTF-8">
+<title>Painel Privado</title>
 
-    .container {
-      text-align: center;
-      background: rgba(30, 41, 59, 0.9);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      max-width: 600px;
-    }
+<style>
+body {
+  background: #0f172a;
+  color: white;
+  font-family: Arial;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-    }
+.box {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+}
+</style>
 
-    p {
-      font-size: 1.1rem;
-      color: #94a3b8;
-    }
+<script>
+// 🚫 Bloquear F12 / inspecionar (não é seguro)
+document.addEventListener('keydown', function(e) {
+  if (e.key === "F12") e.preventDefault();
+  if (e.ctrlKey && e.shiftKey && e.key === "I") e.preventDefault();
+  if (e.ctrlKey && e.key === "U") e.preventDefault();
+});
 
-    .link-box {
-      margin-top: 20px;
-      padding: 15px;
-      background: #0f172a;
-      border-radius: 10px;
-      font-family: monospace;
-      color: #38bdf8;
-    }
+// 🚫 bloquear clique direito
+document.addEventListener('contextmenu', e => e.preventDefault());
 
-    footer {
-      margin-top: 20px;
-      font-size: 0.9rem;
-      color: #64748b;
-    }
-  </style>
+// função login
+async function login() {
+  const senhaInput = document.getElementById("senha").value;
+
+  const res = await fetch("https://github.com/ZTRCOMPANY1/codigoacessojuliontb/blob/main/auth.json");
+  const data = await res.json();
+
+  if (senhaInput === data.password) {
+    document.body.innerHTML = `
+      <h1>Acesso liberado</h1>
+      <a href="https://link.juliontb.site">link.juliontb.site</a>
+    `;
+  } else {
+    alert("Senha incorreta");
+  }
+}
+</script>
+
 </head>
 <body>
 
-  <div class="container">
-    <h1>🌐 Rede de Subdomínios</h1>
-    <p>Este site funciona como um ponto central conectado a vários subdomínios.</p>
-
-    <div class="link-box">
-      Exemplo: link.juliontb.site
-    </div>
-
-    <p>Cada subdomínio pode levar a um conteúdo ou serviço diferente dentro da mesma rede.</p>
-
-    <footer>
-      © 2026 - Sua Rede
-    </footer>
-  </div>
+<div class="box">
+  <h2>Login</h2>
+  <input type="password" id="senha" placeholder="Senha"><br><br>
+  <button onclick="login()">Entrar</button>
+</div>
 
 </body>
 </html>
